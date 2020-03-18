@@ -1,9 +1,11 @@
 
 <?php
-$bdd_users = mysqli_connect("localhost", "root", "","Debster");
+$bdd_users = mysqli_connect("localhost", "root", "","test");
 if (mysqli_connect_errno($bdd_users)) {
     echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
 }
+
+
 
 $new_user =  "INSERT INTO Utilisateurs(username, password, email) VALUES('$_POST[username]', '$_POST[password]','$_POST[mail]')";
 

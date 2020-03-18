@@ -21,18 +21,21 @@
         <h1 class="display-4">Creation d'un compte</h1>
       </div>
     </div>
-<div class="container">
+    <div class="container">
 
         <div class="col-sm">
           <div class="card" style="width: 18rem;">
             <div class="card-body">
             <form action="validation_creation.php" method="post">
 
-                Identifiant: <input type="text" name="username" /> </br></br>
-                Mot de passe: <input type="password" name="password" /> </br></br>
-                E-mail: <input type="text" name="mail" /> </br></br>
+                Identifiant: <input type="text" name="username" class="p-2"/> 
+                Nom: <input type="text" name="nom" class="p-2"/> 
+                Prénom: <input type="text" name="prenom" class="p-2"/> 
+                Date de naissance: <input type="date" name="date" class="p-2"/> </br>
+                Mot de passe: <input type="password" name="password" class="p-2"/> 
+                E-mail: <input type="text" name="mail" class="p-2"/> 
 
-                <input type="submit" />
+                <input type="submit" value="Envoyer le formulaire"/>
             </form>
             </div>
           </div>

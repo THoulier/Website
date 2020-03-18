@@ -18,7 +18,7 @@
     
     <div class="jumbotron jumbotron-fluid" style="background-color:#FF8800">
       <div class="container">
-        <h1 class="display-4">Creation d'un compte</h1>
+        <h1 class="display-4">Création d'un compte</h1>
       </div>
     </div>
     <div class="container">
@@ -33,7 +33,7 @@
                 Prénom: <input type="text" name="prenom" class="p-2"/> 
                 Date de naissance: <input type="date" name="date" class="p-2"/> </br>
                 Mot de passe: <input type="password" name="password" class="p-2"/> 
-                E-mail: <input type="text" name="mail" class="p-2"/> 
+                E-mail: <input type="email" name="mail" class="p-2"/> 
 
                 <input type="submit" value="Envoyer le formulaire"/>
             </form>

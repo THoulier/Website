@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 18 mars 2020 à 11:29
+-- Généré le : mer. 18 mars 2020 à 15:42
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.3
 
@@ -39,6 +39,13 @@ CREATE TABLE `Utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Déchargement des données de la table `Utilisateur`
+--
+
+INSERT INTO `Utilisateur` (`ID`, `Mail`, `MdP`, `Nom`, `Prenom`, `Date`, `Pseudo`) VALUES
+(1, 'gabriel.berger98@gmail.com', 'Blabla', 'Berger', 'Gabriel', '1998-04-15', 'Gaby');
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -56,7 +63,7 @@ ALTER TABLE `Utilisateur`
 -- AUTO_INCREMENT pour la table `Utilisateur`
 --
 ALTER TABLE `Utilisateur`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

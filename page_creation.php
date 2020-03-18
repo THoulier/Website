@@ -18,7 +18,7 @@
     
     <div class="jumbotron jumbotron-fluid" style="background-color:#FF8800">
       <div class="container">
-        <h1 class="display-4">Création d'un compte</h1>
+        <h1 class="display-4">Création d'un compte.</h1>
       </div>
     </div>
     <div class="container">

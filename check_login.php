@@ -22,13 +22,17 @@ if (empty($assoc['MdP'])) {
   header("http://localhost/connexion.php*?mess=1");
 } else {
   if ($assoc['MdP']==$mdp_utilisateur) {
-    session_start();
-    $_SESSION['mail']=$mail;
+    //session_start();
+    //$_SESSION['mail']=$mail;
     header("Location: http://localhost/index.hmtl");
   } else {
     header("Location: http://localhost/connexion.php*?mess=2");
   }
 }
 
-
+session_start();
+$_SESSION['mail']=$mail;
 ?>
+
+<a href="ajouter_ami.php">Gestion des amis</a>
+

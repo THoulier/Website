@@ -21,17 +21,31 @@
 
 <body>
 <div class="container" id="main">
-<div class="row">w
+<div class="row">
 <form action="check_login.php" method="post">
 
   <div class="form-group">
         <label for="InputEmail1">Adresse email</label>
         <input type="email" name="InputEmail" class="form-control" id="InputEmail" aria-describedby="emailHelp">
+        <?php
+            if (isset($_GET["mess"]) && $_GET["mess"]==1) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                        echo "Mail incorrecte !";
+                  echo "</div>";
+            }
+      ?>
 
   </div>
   <div class="form-group">
-        <label for="InputPassword1">Mot de passe</label>
+        <label for="InputPassword">Mot de passe</label>
         <input type="password" name="InputPassword" class="form-control" id="InputPassword">
+        <?php
+            if (isset($_GET["mess"]) && $_GET["mess"]==2) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                        echo "Mot de passe incorrecte !";
+                  echo "</div>";
+            }
+      ?>
   </div>
 
   <div class="form-group form-check">

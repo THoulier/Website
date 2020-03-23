@@ -1,29 +1,34 @@
 <?php
-try
-{
-	$bdd_users = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', '');
-}
-  catch(Exception $e)
-{
-	// En cas d'erreur, on affiche un message et on arrête tout
-  die('Erreur : '.$e->getMessage());
+$bdd_users = mysqli_connect("localhost","root","", "test");
+if (mysqli_connect_errno($bdd_users)) {
+    echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
 }
 
 $mail = $_POST['InputEmail'];
 $mdp_utilisateur = $_POST['InputPassword'];
 
-$req = $bdd_users->prepare('SELECT password FROM Utilisateur WHERE  = ?');
-$req->execute(array($mail));
-$mdp_bdd = $req->fetch();
 
 
-if (empty($mdp_bdd)){
-  echo "Aucun compte n'est relié à cette adresse";
+
+$stmt = mysqli_prepare($bdd_users,"SELECT Mdp from Utilisateur WHERE mail = ?");
+mysqli_stmt_bind_param($stmt, 'i', $mail);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+$assoc = mysqli_fetch_assoc($res);
+
+
+
+if (empty($assoc['MdP'])) {
+  header("http://localhost/connexion.php*?mess=1");
+} else {
+  if ($assoc['MdP']==$mdp_utilisateur) {
+    session_start();
+    $_SESSION['mail']=$mail;
+    header("Location: http://localhost/index.hmtl");
+  } else {
+    header("Location: http://localhost/connexion.php*?mess=2");
+  }
 }
-elseif ($mdp_bdd == $mdp_utilisateur) {
-  echo "mot de passe correct";
-}
-else {
-  echo "Mot de passe incorrect";
-}
+
+
 ?>

@@ -28,12 +28,74 @@
             <div class="card-body">
             <form action="validation_creation.php" method="post">
 
-                Identifiant: <input type="text" name="username" class="p-2"/> 
+                Identifiant: <input type="text" name="username" class="p-2"/>
+                <?php
+                if (isset($_GET["id"])){ 
+                  if ($_GET["id"]==1) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "Vous devez renseigner votre identifiant !";
+                    echo "</div>";
+                  } elseif ($_GET["id"]==2) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "L'identifiant doit être renseigné en lettres minuscules sans accents, sans caractères spéciaux.";
+                    echo "</div>";
+                  } elseif ($_GET["id"]==3) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "L'identifiant est trop long, il dépasse 25 caractères.";
+                    echo "</div>";
+                  } elseif ($_GET["id"]==4) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "Cet identifiant est déjà utilisé.";
+                    echo "</div>";
+                  }
+                }
+                ?>
                 Nom: <input type="text" name="nom" class="p-2"/> 
+                <?php
+                if (isset($_GET["nom"])) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                        echo "Vous devez renseigner votre nom.";
+                  echo "</div>";
+                }
+                ?>
                 Prénom: <input type="text" name="prenom" class="p-2"/> 
+                <?php
+                if (isset($_GET["prenom"])) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                        echo "Vous devez renseigner votre prénom.";
+                  echo "</div>";
+                }
+                ?>
                 Date de naissance: <input type="date" name="date" class="p-2"/> </br>
+                <?php
+                if (isset($_GET["date"])) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                        echo "Vous devez renseigner votre date de naissance.";
+                  echo "</div>";
+                }
+                ?>
                 Mot de passe: <input type="password" name="password" class="p-2"/> 
+                <?php
+                if (isset($_GET["pass"])) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                        echo "Vous devez renseigner votre mot de passe.";
+                  echo "</div>";
+                }
+                ?>
                 E-mail: <input type="email" name="mail" class="p-2"/> 
+                <?php
+                if (isset($_GET["mail"])) {
+                  if ($_GET["mail"]=1) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "Vous devez renseigner votre adresse mail.";
+                    echo "</div>";
+                  } elseif ($_GET["mail"]==2) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "Cette adresse mail est déjà utilisée.";
+                    echo "</div>";
+                  }
+                }
+                ?>
 
                 <input type="submit" value="Envoyer le formulaire"/>
             </form>

@@ -45,7 +45,14 @@
       </li>
 
     </ul>
-
+    <?php
+    session_start();
+    if (isset($_SESSION['mail'])) {
+      echo '<div class="nav-item">';
+        echo '<a class="nav-link text-body" href="deconnexion.php">Deconnexion</a>';
+      echo '</div>';
+    }
+    ?>
     <div class="nav-item">
       <a class="nav-link text-body" href="#">Nous contacter</a>
     </div>
@@ -60,7 +67,7 @@
        <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">En savoir plus...</a></p>
      </div>
    </div>
-
+    
     <div class="container marketing">
 
 

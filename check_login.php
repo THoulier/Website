@@ -1,4 +1,5 @@
 <?php
+include("functions.php");
 $bdd_users = con();
 if (mysqli_connect_errno($bdd_users)) {
     echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();

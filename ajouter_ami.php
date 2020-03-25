@@ -84,7 +84,7 @@ session_start();
 
   <div class="titre"><h2>Ils souhaitent être ami avec toi:</h2></div>
     <?php
-      
+      include("functions.php");
       $bdd_friend = con();
       if (mysqli_connect_errno($bdd_friend)) {
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();

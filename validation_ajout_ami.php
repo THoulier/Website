@@ -8,7 +8,7 @@ if(isset($_SESSION['mail']))
 }
 
 
-$bdd_friend = mysqli_connect("localhost", "root", "","test");
+$bdd_friend = con();
 if (mysqli_connect_errno($bdd_friend)) {
     echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
 }

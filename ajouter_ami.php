@@ -34,11 +34,11 @@
 
     <ul class="navbar-nav mr-auto">
 
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+    <li class="nav-item active">
+        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Page 1</a>
+        <a class="nav-link" href="ajouter_ami.php">Gestion des amis</a>
       </li>
 
       <li class="nav-item">
@@ -83,6 +83,20 @@
             <form action="validation_ajout_ami.php" method="post">
 
                 Identifiant: <input type="text" name="id_to" class="p-2"/> </br>
+                <?php
+                if (isset($_GET["id"])){ 
+                  if ($_GET["id"]==1) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "Vous devez renseigner un identifiant";
+                    echo "</div>";
+                  
+                  } elseif ($_GET["id"]==4) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                          echo "Cet utilisateur n'existe pas";
+                    echo "</div>";
+                  }
+                }
+                ?>
                 <input type="submit" value="Ajouter en ami"/>
             </form>
   </div>

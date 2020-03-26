@@ -75,7 +75,7 @@ if (empty($_POST['username'])) {
 
 
 if (!empty($error)) {
-    header("Location: http://localhost/page_creation.php?".$error);
+    header("Location: page_creation.php?".$error);
     exit();
 }
 

@@ -25,12 +25,12 @@
 
       <ul class="navbar-nav mr-auto">
 
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Page 1</a>
-        </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ajouter_ami.php">Gestion des amis</a>
+      </li>
 
         <li class="nav-item">
           <a class="nav-link" href="#">Page 2</a>

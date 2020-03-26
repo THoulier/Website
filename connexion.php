@@ -20,6 +20,41 @@
 </head>
 
 <body>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-info">
+    <a class="navbar-brand" href="index.php">Application LGBT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Page 1</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Page 2</a>
+        </li>
+
+      </ul>
+      <div class="nav-item">
+        <a class="nav-link text-body" href="#">Nous contacter</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+     <div class="col-md-6 pt-4 px-0">
+       <h1 class="display-4 font-italic"><p id="welcome">Connectez-vous !</p></h1>
+       <p class="lead my-3">Retrouvez vos amis sur notre application !</p>     
+       </div>
+  </div>
+
 <div class="container" id="main">
 <div class="row">
 <form action="check_login.php" method="post">
@@ -58,5 +93,13 @@
 </div>
 </div>
 </body>
+<footer class="text-muted">
+  <div class="container pt-5">
+    <p class="float-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>Ceci est un test. Nous allons penser plus tard au texte à mettre ici. blablabla. Gabriel Berger, Thomas Houllier, Leïla Bouidra.</p>
+  </div>
+</footer>
 
 </html>

@@ -67,9 +67,9 @@ if (empty($_POST['username'])) {
     } 
 } elseif (mysqli_num_rows(mysqli_query($bdd_users,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['username']."'"))==1) {
     if (!empty($error)) {
-        $error=$error."&id=1";
+        $error=$error."&id=2";
     } else {
-        $error="id=1";
+        $error="id=2";
     }
 }
 

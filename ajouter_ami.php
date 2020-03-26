@@ -1,8 +1,4 @@
 
-<?php
-session_start();  
-
-?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -50,7 +46,17 @@ session_start();
       </li>
 
     </ul>
-
+    <?php
+    session_start();
+    if (isset($_SESSION['mail'])) {
+      echo '<div class="nav-item">';
+        echo '<a class="nav-link text-body" href="deconnexion.php">Deconnexion</a>';
+      echo '</div>';
+      echo '<div class="nav-item">';
+        echo $_SESSION['mail'];
+      echo '</div>';
+    }
+    ?>
     <div class="nav-item">
       <a class="nav-link text-body" href="#">Nous contacter</a>
     </div>
@@ -84,28 +90,25 @@ session_start();
 
   <div class="titre"><h2>Ils souhaitent être ami avec toi:</h2></div>
     <?php
-      include("functions.php");
-      $bdd_friend = con();
+      //include("functions.php");
+      $bdd_friend = mysqli_connect("localhost", "root", "","test");
       if (mysqli_connect_errno($bdd_friend)) {
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
       }
 
-      $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
+      $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
 
       while ($donnees = ($row = mysqli_fetch_row($ras))){
         $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==0){
                 
-          echo $raw[0].' ';
+          echo $raw[0]." </br><a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a><a href='action_ami.php?action=add&id=". $donnees[2] . "'>Ajouter</a></br>";
         }}
     
 
     ?>
-            <form action="ajouter_ami.php" method="post">
-                <input type="submit" value="Accepter"/>
-            <form action="ajouter_ami.php" method="post">
-                <input type="submit" value="Refuser"/>
+           
 
     
 </div>
@@ -123,39 +126,33 @@ session_start();
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
       }
       
-      $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
+      $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
 
       while ($donnees = ($row = mysqli_fetch_row($ras))){
         $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==1){
                 
-          echo $raw[0].' ';
+          echo $raw[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a></br>";          
         }}
 
-        $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
+        $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
 
       while ($donnees = ($row2 = mysqli_fetch_row($ras2))){
         $res2 = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
         $raw2=mysqli_fetch_row ($res2); 
         if($donnees[0]==1){
                 
-          echo $raw2[0].' ';
-        }}
-    
-      
+          echo $raw2[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a></br>";
 
+        }}
+        
     ?>
    
 </div>
 </div>
 
 </body>
-<?php 
-if(isset($_SESSION['mail']))
-{
-    echo 'Vous êtes connecté en tant que '  .$_SESSION['mail'];
-}
-?>
+
 
 </html>

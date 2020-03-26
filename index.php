@@ -51,6 +51,9 @@
       echo '<div class="nav-item">';
         echo '<a class="nav-link text-body" href="deconnexion.php">Deconnexion</a>';
       echo '</div>';
+      echo '<div class="nav-item">';
+        echo $_SESSION['mail'];
+      echo '</div>';
     }
     ?>
     <div class="nav-item">

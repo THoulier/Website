@@ -127,7 +127,7 @@
                 }
                 ?>
 
-                <input type="submit" value="Envoyer le formulaire"/>
+              <button type="submit" class="btn btn-primary">Inscrivez-vous !</button>
             </form>
             </div>
           </div>

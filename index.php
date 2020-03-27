@@ -49,7 +49,7 @@
     session_start();
     if (isset($_SESSION['mail'])) {
       echo '<div class="nav-item">';
-        echo '<a class="nav-link text-body" href="deconnexion.php">Deconnexion</a>';
+        echo '<a class="nav-link text-body" href="deconnexion.php">Déconnexion</a>';
       echo '</div>';
       echo '<div class="nav-item">';
         echo $_SESSION['mail'];

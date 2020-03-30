@@ -102,6 +102,9 @@
         elseif ($_GET["id"]==3) {
           echo '<div class="alert alert-success" role="alert">Votre demande a été envoyée!</div>';
         }
+        elseif ($_GET["id"]==5) {
+          echo '<div class="alert alert-danger" role="alert">Vous avez déjà reçue une demande de cet utilisateur ou il est déjà votre ami. </div>';
+        }
       }
     ?>
 <input type="submit" value="Ajouter en ami"/>
@@ -111,7 +114,7 @@
 
   <div class="titre"><h2>Ils souhaitent être ami avec toi:</h2></div>
     <?php
-      //include("functions.php");
+      //include("fonction.php");
       $bdd_friend = mysqli_connect("localhost", "root", "","test");
       if (mysqli_connect_errno($bdd_friend)) {
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
@@ -124,7 +127,7 @@
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==0){
                 
-          echo $raw[0]." </br><a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a><a href='action_ami.php?action=add&id=". $donnees[2] . "'>Ajouter</a></br>";
+          echo $raw[0]." </br><a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a><a href='action_ami.php?action=add&id=". $donnees[2] . "'> Ajouter</a></br>";
         }}
     
 
@@ -154,7 +157,7 @@
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==1){
                 
-          echo $raw[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a></br>";          
+          echo $raw[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";          
         }}
 
         $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
@@ -164,7 +167,7 @@
         $raw2=mysqli_fetch_row ($res2); 
         if($donnees[0]==1){
                 
-          echo $raw2[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a></br>";
+          echo $raw2[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";
 
         }}
         

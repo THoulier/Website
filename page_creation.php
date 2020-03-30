@@ -59,10 +59,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
           <input type="text" name="username" class="p-2"/>
         </div>
-        <div class="col-sm ">
+        <div class="col-sm-8">
           <?php
           if (isset($_GET["id"])){ 
             if ($_GET["id"]==1) {
@@ -92,10 +92,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
           <input type="text" name="nom" class="p-2"/>
         </div>
-        <div class="col-sm ">
+        <div class="col-sm-8">
         <?php
           if (isset($_GET["nom"])) {
             echo '<div class="alert alert-danger" role="alert">';
@@ -111,10 +111,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
           <input type="text" name="prenom" class="p-2"/>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-8">
           <?php
             if (isset($_GET["prenom"])) {
               echo '<div class="alert alert-danger" role="alert">';
@@ -130,10 +130,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
           <input type="date" name="date" class="p-2"/> </br>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-8">
           <?php
             if (isset($_GET["date"])) {
               echo '<div class="alert alert-danger" role="alert">';
@@ -149,10 +149,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
           <input type="password" name="password" class="p-2"/>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-8">
           <?php
             if (isset($_GET["pass"])) {
               echo '<div class="alert alert-danger" role="alert">';
@@ -168,10 +168,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
           <input type="email" name="mail" class="p-2"/>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-8">
           <?php
             if (isset($_GET["mail"])) {
               if ($_GET["mail"]==1) {

@@ -19,7 +19,25 @@ if (empty($_POST['id_to'])) {
     }
 
 } 
-elseif (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'"))==0) {
+if ($_POST['id_to'] == $_SESSION['mail']) {
+    if (!empty($error)) {
+        $error=$error."&id=6";
+    } else {
+        $error="id=6";
+    }
+
+} 
+$res0 = mysqli_query($bdd_friend, "SELECT Pseudo FROM Utilisateur WHERE Mail='".$_SESSION['mail']."'");
+$row0 = mysqli_fetch_row ($res0); 
+if ($_POST['id_to'] == $row0[0]) {
+    if (!empty($error)) {
+        $error=$error."&id=6";
+    } else {
+        $error="id=6";
+    }
+
+} 
+if (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'"))==0) {
     if (!empty($error)) {
         $error=$error."&id=4";
     } else {

@@ -105,6 +105,9 @@
         elseif ($_GET["id"]==5) {
           echo '<div class="alert alert-danger" role="alert">Vous avez déjà reçue une demande de cet utilisateur ou il est déjà votre ami. </div>';
         }
+        elseif ($_GET["id"]==6) {
+          echo '<div class="alert alert-danger" role="alert">Vous ne pouvez vous demander en ami! </div>';
+        }
       }
     ?>
 <input type="submit" value="Ajouter en ami"/>
@@ -175,6 +178,7 @@
    
 </div>
 </div>
+
 
 </body>
 

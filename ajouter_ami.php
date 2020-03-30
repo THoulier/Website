@@ -79,26 +79,33 @@
 <div class="row ">
   <div class="bg-dark shadow p-5 mb-5 text-white text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
 
-  <div class="titre"><h2>Ajouter un ami</h2></div>
-            <form action="validation_ajout_ami.php" method="post">
+  <form action="validation_ajout_ami.php" method="post">
 
-                Identifiant: <input type="text" name="id_to" class="p-2"/> </br>
-                <?php
-                if (isset($_GET["id"])){ 
-                  if ($_GET["id"]==1) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                          echo "Vous devez renseigner un identifiant";
-                    echo "</div>";
-                  
-                  } elseif ($_GET["id"]==4) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                          echo "Cet utilisateur n'existe pas";
-                    echo "</div>";
-                  }
-                }
-                ?>
-                <input type="submit" value="Ajouter en ami"/>
-            </form>
+    Identifiant ou adresse mail: <input type="text" name="id_to" class="p-2"/> </br>
+    <?php
+      if (isset($_GET["id"])){ 
+        if ($_GET["id"]==1) {
+          echo '<div class="alert alert-danger" role="alert">';
+          echo "Vous devez renseigner un identifiant ou une adresse mail";
+          echo "</div>";
+        } 
+        elseif ($_GET["id"]==2) {
+          echo '<div class="alert alert-danger" role="alert">';
+          echo "Vous avez déjà envoyé une demande à cet utilisateur";
+          echo "</div>";
+        }
+        elseif ($_GET["id"]==4) {
+          echo '<div class="alert alert-danger" role="alert">';
+          echo "Cet utilisateur n'existe pas";
+          echo "</div>";
+        }
+        elseif ($_GET["id"]==3) {
+          echo '<div class="alert alert-success" role="alert">Votre demande a été envoyée!</div>';
+        }
+      }
+    ?>
+<input type="submit" value="Ajouter en ami"/>
+</form>
   </div>
   <div class="bg-light shadow p-5 mb-5 text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
 

@@ -18,14 +18,19 @@ if (empty($_POST['id_to'])) {
         $error="id=1";
     }
 
-} elseif (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."'"))==0) {
+} elseif (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'"))==0) {
     if (!empty($error)) {
         $error=$error."&id=4";
     } else {
         $error="id=4";
     }
+} elseif (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT Amis.id_to FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'"))==1) {
+    if (!empty($error)) {
+        $error=$error."&id=2";
+    } else {
+        $error="id=2";
+    }
 }
-
 
 if (!empty($error)) {
     header("Location: ajouter_ami.php?".$error);
@@ -36,7 +41,7 @@ if (!empty($error)) {
 
 
 $res = mysqli_query($bdd_friend, "SELECT * FROM Utilisateur WHERE Mail='".$_SESSION['mail']."'");
-$ras = mysqli_query($bdd_friend, "SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."'");
+$ras = mysqli_query($bdd_friend, "SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'");
 
 $id_ask_friend = mysqli_fetch_row($res);
 $id_new_friend = mysqli_fetch_row($ras);

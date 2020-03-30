@@ -127,7 +127,7 @@
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==0){
                 
-          echo $raw[0]." </br><a href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a><a href='action_ami.php?action=add&id=". $donnees[2] . "'> Ajouter</a></br>";
+          echo $raw[0]." </br><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a> &nbsp<a class='btn btn-primary' role='button' href='action_ami.php?action=add&id=". $donnees[2] . "'> Ajouter</a></br>";
         }}
     
 
@@ -157,7 +157,7 @@
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==1){
                 
-          echo $raw[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";          
+          echo $raw[0] ." &nbsp <a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";          
         }}
 
         $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
@@ -167,7 +167,7 @@
         $raw2=mysqli_fetch_row ($res2); 
         if($donnees[0]==1){
                 
-          echo $raw2[0] ."<a href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";
+          echo $raw2[0] ." &nbsp <a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";
 
         }}
         

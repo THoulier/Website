@@ -47,7 +47,9 @@
 
     </ul>
     <?php
+    include("fonction.php");
     session_start();
+    ses();
     if (isset($_SESSION['mail'])) {
       echo '<div class="nav-item">';
         echo '<a class="nav-link text-body" href="deconnexion.php">Deconnexion</a>';
@@ -154,26 +156,42 @@
       }
       
       $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
-
-      while ($donnees = ($row = mysqli_fetch_row($ras))){
-        $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
-        $raw=mysqli_fetch_row ($res); 
-        if($donnees[0]==1){
+      echo '<table class="table table-hover table-dark">';
+        echo '<tbody>';
+          while ($donnees = ($row = mysqli_fetch_row($ras))){
+            $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
+            $raw = mysqli_fetch_row ($res); 
+            $soldereq = mysqli_query($bdd_friend, "SELECT Solde FROM Amis WHERE ID='".$donnees[2]."'");
+            $solde = mysqli_fetch_row ($soldereq);
+            if($donnees[0]==1){
+              echo '<tr>';
+                echo '<th scope="row">1</th>';
+                echo '<td>'.$raw[0].'</td>';
+                echo '<td>'.-$solde[0].'€</td>';
+                echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+              echo '</tr>';
                 
-          echo $raw[0] ." &nbsp <a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";          
-        }}
+            }
+          }
 
-        $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
+          $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
 
-      while ($donnees = ($row2 = mysqli_fetch_row($ras2))){
-        $res2 = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
-        $raw2=mysqli_fetch_row ($res2); 
-        if($donnees[0]==1){
-                
-          echo $raw2[0] ." &nbsp <a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></br>";
-
-        }}
-        
+          while ($donnees = ($row2 = mysqli_fetch_row($ras2))){
+            $res2 = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
+            $raw2=mysqli_fetch_row ($res2);
+            $soldereq = mysqli_query($bdd_friend, "SELECT Solde FROM Amis WHERE ID='".$donnees[2]."'");
+            $solde = mysqli_fetch_row ($soldereq);
+            if($donnees[0]==1){
+              echo '<tr>';
+                echo '<th scope="row">1</th>';
+                echo '<td>'.$raw2[0].'</td>';
+                echo '<td>'.$solde[0].'€</td>';
+                echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+              echo '</tr>';
+            }
+          }
+        echo '</tbody>';
+      echo '</table>'  
     ?>
    
 </div>

@@ -26,6 +26,7 @@ if (empty($assoc['Mdp'])) {
   if ($assoc['Mdp']==$mdp_utilisateur) {
     session_start();
     $_SESSION['mail']=$mail;
+    $_SESSION['time']=time();
     header("Location: index.php");
   } else {
     header("Location: connexion.php?mess=2");

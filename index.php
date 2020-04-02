@@ -1,6 +1,7 @@
 <?php
-    session_start();
-    ?>
+  include("fonction.php");
+  session_start();
+?>
 
 <!DOCTYPE html>
 
@@ -42,7 +43,7 @@
       </li>
       <li class="nav-item">
       <?php
-    if (isset($_SESSION['mail'])) {
+      if (isset($_SESSION['mail'])) {
         echo '<a class="nav-link" href="ajouter_ami.php">Gestion des amis</a>';
       
     }

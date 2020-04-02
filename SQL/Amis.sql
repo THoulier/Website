@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 23 mars 2020 à 16:12
+-- Généré le : jeu. 02 avr. 2020 à 13:55
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.3
 
@@ -32,16 +32,16 @@ CREATE TABLE `Amis` (
   `ID` int(11) NOT NULL,
   `id_from` int(11) NOT NULL,
   `id_to` int(11) NOT NULL,
-  `etat` int(11) NOT NULL
+  `etat` int(11) NOT NULL,
+  `Solde` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `Amis`
 --
 
-INSERT INTO `Amis` (`ID`, `id_from`, `id_to`, `etat`) VALUES
-(1, 3, 2, 0),
-(10, 2, 1, 0);
+INSERT INTO `Amis` (`ID`, `id_from`, `id_to`, `etat`, `Solde`) VALUES
+(15, 3, 1, 1, -20);
 
 --
 -- Index pour les tables déchargées
@@ -63,18 +63,7 @@ ALTER TABLE `Amis`
 -- AUTO_INCREMENT pour la table `Amis`
 --
 ALTER TABLE `Amis`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `Amis`
---
-ALTER TABLE `Amis`
-  ADD CONSTRAINT `Amis_ibfk_1` FOREIGN KEY (`id_from`) REFERENCES `Utilisateur` (`ID`),
-  ADD CONSTRAINT `Amis_ibfk_2` FOREIGN KEY (`id_to`) REFERENCES `Utilisateur` (`ID`);
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

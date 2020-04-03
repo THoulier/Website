@@ -1,4 +1,5 @@
-
+<?php
+    include("fonction.php");?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -47,7 +48,6 @@
 
     </ul>
     <?php
-    include("fonction.php");
     session_start();
     ses();
     if (isset($_SESSION['mail'])) {
@@ -96,13 +96,13 @@
           echo "Vous avez déjà envoyé une demande à cet utilisateur";
           echo "</div>";
         }
+        elseif ($_GET["id"]==3) {
+          echo '<div class="alert alert-success" role="alert">Votre demande a été envoyée!</div>';
+        }
         elseif ($_GET["id"]==4) {
           echo '<div class="alert alert-danger" role="alert">';
           echo "Cet utilisateur n'existe pas";
           echo "</div>";
-        }
-        elseif ($_GET["id"]==3) {
-          echo '<div class="alert alert-success" role="alert">Votre demande a été envoyée!</div>';
         }
         elseif ($_GET["id"]==5) {
           echo '<div class="alert alert-danger" role="alert">Vous avez déjà reçue une demande de cet utilisateur ou il est déjà votre ami. </div>';
@@ -119,23 +119,31 @@
 
   <div class="titre"><h2>Ils souhaitent être ami avec toi:</h2></div>
     <?php
-      //include("fonction.php");
-      $bdd_friend = mysqli_connect("localhost", "root", "","test");
+      $bdd_friend = con();
       if (mysqli_connect_errno($bdd_friend)) {
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
       }
 
+      $cpt = 1;
       $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
+      echo '<table class="table table-hover table-white">';
+      echo '<tbody>';
 
       while ($donnees = ($row = mysqli_fetch_row($ras))){
         $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
         $raw=mysqli_fetch_row ($res); 
         if($donnees[0]==0){
-                
-          echo $raw[0]." </br><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'>Supprimer</a> &nbsp<a class='btn btn-primary' role='button' href='action_ami.php?action=add&id=". $donnees[2] . "'> Ajouter</a></br>";
+          echo '<tr>';
+          echo '<th scope="row">'.$cpt.'</th>';
+          echo '<td>'.$raw[0].'</td>';
+          echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=add&id=". $donnees[2] . "'> Ajouter</a></br></td>";
+          echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+          echo '</tr>';
+          $cpt +=1;
         }}
     
-
+      echo '</tbody>';
+      echo '</table>'  
     ?>
            
 
@@ -150,48 +158,46 @@
   <div class="titre"><h2>Tes amis</h2></div>
     <?php
       
-      $bdd_friend = mysqli_connect("localhost", "root", "","test");
+      $bdd_friend = con();
       if (mysqli_connect_errno($bdd_friend)) {
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
       }
-      
-      $ras = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_from,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
+
+      $cpt = 1;
+      $ras = mysqli_query($bdd_friend, "SELECT etat,id_from,id_to,ID,Solde FROM  Amis ");
       echo '<table class="table table-hover table-dark">';
-        echo '<tbody>';
+      echo '<tbody>';
           while ($donnees = ($row = mysqli_fetch_row($ras))){
-            $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
-            $raw = mysqli_fetch_row ($res); 
-            $soldereq = mysqli_query($bdd_friend, "SELECT Solde FROM Amis WHERE ID='".$donnees[2]."'");
-            $solde = mysqli_fetch_row ($soldereq);
-            if($donnees[0]==1){
-              echo '<tr>';
-                echo '<th scope="row">1</th>';
-                echo '<td>'.$raw[0].'</td>';
-                echo '<td>'.-$solde[0].'€</td>';
-                echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
-              echo '</tr>';
-                
-            }
+              if($donnees[0]==1){
+                if($donnees[2]==$_SESSION['ID']){
+                  $res1 = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo,Utilisateur.Nom,Utilisateur.Prenom FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
+                  $raw1 = mysqli_fetch_row($res1);
+                  echo '<tr>';
+                  echo '<th scope="row">'.$cpt.'</th>';
+                  echo '<td>'.$raw1[1].'</td>';
+                  echo '<td>'.$raw1[2].'</td>';
+                  echo '<td>('.$raw1[0].')</td>';
+                  echo '<td>'.$donnees[4].'€</td>';
+                  echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[3] . "'> Supprimer</a></td>";
+                  echo '</tr>';
+                  $cpt +=1;
+                }
+                if ($donnees[1]==$_SESSION['ID']){
+                  $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo,Utilisateur.Nom,Utilisateur.Prenom FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[2]."'");
+                  $raw = mysqli_fetch_row($res);
+                  echo '<tr>';
+                  echo '<th scope="row">'.$cpt.'</th>';
+                  echo '<td>'.$raw[1].'</td>';
+                  echo '<td>'.$raw[2].'</td>';
+                  echo '<td>('.$raw[0].')</td>';
+                  echo '<td>'.-$donnees[4].'€</td>';
+                  echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[3] . "'> Supprimer</a></td>";
+                  echo '</tr>';
+                  $cpt +=1;
+                }
+              }
           }
-
-          $ras2 = mysqli_query($bdd_friend, "SELECT Amis.etat,Amis.id_to,Amis.ID FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.Mail='".$_SESSION['mail']."'");
-
-          while ($donnees = ($row2 = mysqli_fetch_row($ras2))){
-            $res2 = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
-            $raw2=mysqli_fetch_row ($res2);
-            $soldereq = mysqli_query($bdd_friend, "SELECT Solde FROM Amis WHERE ID='".$donnees[2]."'");
-            $solde = mysqli_fetch_row ($soldereq);
-            if($donnees[0]==1){
-              echo '<tr>';
-                echo '<th scope="row">1</th>';
-                echo '<td>'.$raw2[0].'</td>';
-                echo '<td>'.$solde[0].'€</td>';
-                echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
-              echo '</tr>';
-            }
-          }
-        echo '</tbody>';
-      echo '</table>'  
+          
     ?>
    
 </div>

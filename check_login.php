@@ -12,7 +12,7 @@ $mdp_utilisateur = $_POST['InputPassword'];
 
 
 
-$stmt = mysqli_prepare($bdd_users,"SELECT Mdp from Utilisateur WHERE Mail = ?");
+$stmt = mysqli_prepare($bdd_users,"SELECT * from Utilisateur WHERE Mail = ?");
 mysqli_stmt_bind_param($stmt, 's', $mail);
 mysqli_stmt_execute($stmt);
 $res = mysqli_stmt_get_result($stmt);
@@ -27,6 +27,11 @@ if (empty($assoc['Mdp'])) {
     session_start();
     $_SESSION['mail']=$mail;
     $_SESSION['time']=time();
+    $_SESSION['ID']=$assoc['ID'];
+    $_SESSION['Pseudo']=$assoc['Pseudo'];
+    $_SESSION['Prenom']=$assoc['Prenom'];
+    $_SESSION['Nom']=$assoc['Nom'];
+
     header("Location: index.php");
   } else {
     header("Location: connexion.php?mess=2");

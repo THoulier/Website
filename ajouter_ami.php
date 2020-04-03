@@ -75,11 +75,12 @@
    </div>
 
 
-   <div class="container marketing">
+  <div class="container marketing">
 
 
 <div class="row ">
-  <div class="bg-dark shadow p-5 mb-5 text-white text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
+  <div class="bg-white shadow p-5 mb-5 text-dark text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
+  <div class="titre"><h2>Envoies une invitation</h2></div>
 
   <form action="validation_ajout_ami.php" method="post">
 
@@ -117,7 +118,7 @@
   </div>
   <div class="bg-light shadow p-5 mb-5 text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
 
-  <div class="titre"><h2>Ils souhaitent être ami avec toi:</h2></div>
+  <div class="titre"><h2>Invitations reçues</h2></div>
     <?php
       $bdd_friend = con();
       if (mysqli_connect_errno($bdd_friend)) {
@@ -147,13 +148,13 @@
     ?>
            
 
-    
+    </div>
 </div>
 
 
 
 
-  <div class="bg-dark shadow p-5 mb-5 text-white text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
+  <div class="bg-white shadow p-5 mb-5 text-dark text-center mr-md-3 pt-3 px-3 pt-md-5 px-md-5 col">
 
   <div class="titre"><h2>Tes amis</h2></div>
     <?php
@@ -162,10 +163,10 @@
       if (mysqli_connect_errno($bdd_friend)) {
           echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
       }
-
+     
       $cpt = 1;
       $ras = mysqli_query($bdd_friend, "SELECT etat,id_from,id_to,ID,Solde FROM  Amis ");
-      echo '<table class="table table-hover table-dark">';
+      echo '<table class="table table-hover table-white">';
       echo '<tbody>';
           while ($donnees = ($row = mysqli_fetch_row($ras))){
               if($donnees[0]==1){
@@ -201,7 +202,7 @@
     ?>
    
 </div>
-</div>
+
 
 
 </body>

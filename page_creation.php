@@ -188,7 +188,9 @@
         </div>
       </div>
       <div class ="row">
+      <div class="col-sm ">
         <button type="submit" class="btn btn-primary">Inscrivez-vous !</button>
+      </div>
       </div>
     </form>
   </div>

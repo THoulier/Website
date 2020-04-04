@@ -1,5 +1,7 @@
 <?php
-    include("fonction.php");?>
+    include("fonction.php");
+    session_start();
+    ?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -43,12 +45,16 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#">Page 2</a>
+      <?php
+      if (isset($_SESSION['mail'])) {
+        echo '<a class="nav-link" href="transactions.php">Gestion des transactions</a>';
+      
+    }
+    ?>
       </li>
 
     </ul>
     <?php
-    session_start();
     ses();
     if (isset($_SESSION['mail'])) {
       echo '<div class="nav-item">';

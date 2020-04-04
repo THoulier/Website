@@ -20,10 +20,10 @@ $assoc = mysqli_fetch_assoc($res);
 
 
 
-if (empty($assoc['Mdp'])) {
+if (empty($assoc['MdP'])) {
   header("Location: connexion.php?mess=1");
 } else {
-  if ($assoc['Mdp']==$mdp_utilisateur) {
+  if ($assoc['MdP']==$mdp_utilisateur) {
     session_start();
     $_SESSION['mail']=$mail;
     $_SESSION['time']=time();

@@ -204,8 +204,6 @@
       
       $n=1;
       while ($donnees = ($row = mysqli_fetch_row($ras))){
-        $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[3]."'");
-        $raw1 = mysqli_fetch_row($res1);
         echo '<tr>';
         echo '<th scope="row">'.$n.'</th>';
         echo '<td>'.$donnees[4].'€';
@@ -217,7 +215,7 @@
             echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
             if (isset($_POST['valeur'])){
               $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
-              header("Location:transactions.php");
+              echo("<meta http-equiv='refresh' content='0'; URL=transactions.php");
             }
           } else {
             echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
@@ -227,9 +225,15 @@
         }
         echo '</td>';
 
-
-        echo '<td>'.$_SESSION['Pseudo'].'</td>';
+        $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[2]."'");
+        $raw1 = mysqli_fetch_row($res1);
         echo '<td>'.$raw1[0].'</td>';
+
+        $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[3]."'");
+        $raw1 = mysqli_fetch_row($res1);
+        echo '<td>'.$raw1[0].'</td>';
+
+
         echo '<td>'.$donnees[1];
 
 
@@ -241,7 +245,7 @@
             echo '<form action="" method="post"><input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
             if(isset($_POST['msg_ex'])){
               $moo = mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$donnees[0]."'");
-              header("Location:transactions.php");
+              echo("<meta http-equiv='refresh' content='0'; URL=transactions.php>"); 
             }
           } else {
             echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";

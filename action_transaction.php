@@ -21,18 +21,18 @@ $value ="";
 if ($_GET['action']=="modifymsg"){
     
     if (!empty($value)) {
-        $value=$value."&mod=1";
+        $value=$value."&modmsg=".$_GET['id'];
     } else {
-        $value="mod=1";
+        $value="modmsg=".$_GET['id'];
     }
 
 } 
 if ($_GET['action']=="modifymontant"){
     
     if (!empty($value)) {
-        $value=$value."&mod=2";
+        $value=$value."&modar=".$_GET['id'];
     } else {
-        $value="mod=2";
+        $value="modar=".$_GET['id'];
     }
 
 } 

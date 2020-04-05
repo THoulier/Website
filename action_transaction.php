@@ -14,4 +14,35 @@ if ($_GET['action']=="regler"){
     header("Location:transactions.php");
 }
 
+
+
+$value ="";
+
+if ($_GET['action']=="modifymsg"){
+    
+    if (!empty($value)) {
+        $value=$value."&mod=1";
+    } else {
+        $value="mod=1";
+    }
+
+} 
+if ($_GET['action']=="modifymontant"){
+    
+    if (!empty($value)) {
+        $value=$value."&mod=2";
+    } else {
+        $value="mod=2";
+    }
+
+} 
+if (!empty($value)) {
+    header("Location: transactions.php?".$value);
+    exit();
+}
+
+
+
+
+
 ?>

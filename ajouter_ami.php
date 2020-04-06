@@ -155,6 +155,8 @@
 
 
 </body>
-
+<?php
+  include("ressource/footer.php");
+?>
 
 </html>

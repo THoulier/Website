@@ -60,5 +60,8 @@
     <p>Ceci est un test. Nous allons penser plus tard au texte à mettre ici. blablabla. Gabriel Berger, Thomas Houllier, Leïla Bouidra.</p>
   </div>
 </footer>
+<?php
+  include("ressource/footer.php");
+?>
 
 </html>

@@ -97,37 +97,35 @@
                 echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
               }
               $cpt = 1;
-              $ras = mysqli_query($bdd_friend, "SELECT etat,id_from,id_to,ID,Solde FROM  Amis ");
+              $ras = mysqli_query($bdd_friend, "SELECT id_from,id_to,ID,Solde FROM  Amis WHERE etat=1");
               echo '<table class="table table-hover table-white">';
                 echo '<tbody>';
                   while ($donnees = ($row = mysqli_fetch_row($ras))) {
-                    if($donnees[0]==1){
-                      if($donnees[2]==$_SESSION['ID']){
-                        $res1 = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo,Utilisateur.Nom,Utilisateur.Prenom FROM Utilisateur INNER JOIN Amis ON Amis.id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
-                        $raw1 = mysqli_fetch_row($res1);
-                        echo '<tr>';
-                        echo '<th scope="row">'.$cpt.'</th>';
-                        echo '<td>'.$raw1[1].'</td>';
-                        echo '<td>'.$raw1[2].'</td>';
-                        echo '<td>('.$raw1[0].')</td>';
-                        echo '<td>'.$donnees[4].'€</td>';
-                        echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[3] . "'> Supprimer</a></td>";
-                        echo '</tr>';
-                        $cpt +=1;
-                      }
-                      if ($donnees[1]==$_SESSION['ID']){
-                        $res = mysqli_query($bdd_friend, "SELECT Utilisateur.Pseudo,Utilisateur.Nom,Utilisateur.Prenom FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[2]."'");
-                        $raw = mysqli_fetch_row($res);
-                        echo '<tr>';
-                        echo '<th scope="row">'.$cpt.'</th>';
-                        echo '<td>'.$raw[1].'</td>';
-                        echo '<td>'.$raw[2].'</td>';
-                        echo '<td>('.$raw[0].')</td>';
-                        echo '<td>'.-$donnees[4].'€</td>';
-                        echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[3] . "'> Supprimer</a></td>";
-                        echo '</tr>';
-                        $cpt +=1;
-                      }
+                    if($donnees[1]==$_SESSION['ID']){
+                      $res1 = mysqli_query($bdd_friend, "SELECT Pseudo,Nom,Prenom FROM Utilisateur INNER JOIN Amis ON id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[0]."'");
+                      $raw1 = mysqli_fetch_row($res1);
+                      echo '<tr>';
+                      echo '<th scope="row">'.$cpt.'</th>';
+                      echo '<td>'.$raw1[1].'</td>';
+                      echo '<td>'.$raw1[2].'</td>';
+                      echo '<td>('.$raw1[0].')</td>';
+                      echo '<td>'.$donnees[3].'€</td>';
+                      echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      echo '</tr>';
+                      $cpt +=1;
+                    }
+                    if ($donnees[0]==$_SESSION['ID']){
+                      $res = mysqli_query($bdd_friend, "SELECT Pseudo,Nom,Prenom FROM Utilisateur INNER JOIN Amis ON id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
+                      $raw = mysqli_fetch_row($res);
+                      echo '<tr>';
+                      echo '<th scope="row">'.$cpt.'</th>';
+                      echo '<td>'.$raw[1].'</td>';
+                      echo '<td>'.$raw[2].'</td>';
+                      echo '<td>('.$raw[0].')</td>';
+                      echo '<td>'.-$donnees[3].'€</td>';
+                      echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[3] . "'> Supprimer</a></td>";
+                      echo '</tr>';
+                      $cpt +=1;
                     }
                   }
                 echo '</tbody>';

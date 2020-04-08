@@ -111,7 +111,7 @@
   </div>
 
   <div class="container marketing">
-    <div class="titre"><h2>Voir tes transactions</h2></div>
+    <div class="titre"><h2>Historique de tes transactions</h2></div>
       <?php
       
         $bdd_transac = con();
@@ -119,7 +119,7 @@
             echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
         }
       
-        $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src=".$_SESSION['ID'].") OR (User_cible=".$_SESSION['ID'].")");
+        $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
         echo '<table class="table table-hover table-white">';
 
         echo '<thead>';
@@ -200,7 +200,7 @@
           }elseif ($donnees[6] == 2){
             echo '<td>Annulée<td>';
           }
-          echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "'> Régler</a></td>";
+          echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "'> Régler</a></td>";          
           echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "'> Annuler</a></td>";
           echo '</tr>';
           $n=$n+1;

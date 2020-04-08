@@ -101,32 +101,33 @@
               echo '<table class="table table-hover table-white">';
                 echo '<tbody>';
                   while ($donnees = ($row = mysqli_fetch_row($ras))) {
+                    echo '<tr>';
+                    echo '<th scope="row">'.$cpt.'</th>';
                     if($donnees[1]==$_SESSION['ID']){
                       $res1 = mysqli_query($bdd_friend, "SELECT Pseudo,Nom,Prenom FROM Utilisateur INNER JOIN Amis ON id_from=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[0]."'");
                       $raw1 = mysqli_fetch_row($res1);
-                      echo '<tr>';
-                      echo '<th scope="row">'.$cpt.'</th>';
                       echo '<td>'.$raw1[1].'</td>';
                       echo '<td>'.$raw1[2].'</td>';
                       echo '<td>('.$raw1[0].')</td>';
                       echo '<td>'.$donnees[3].'€</td>';
-                      echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      echo "<td><a class='btn btn-primary' role='button' href='transactions_ami.php?id=". $donnees[0] . "'> Voir les transactions</a></td>";
                       echo '</tr>';
                       $cpt +=1;
                     }
                     if ($donnees[0]==$_SESSION['ID']){
                       $res = mysqli_query($bdd_friend, "SELECT Pseudo,Nom,Prenom FROM Utilisateur INNER JOIN Amis ON id_to=Utilisateur.ID WHERE Utilisateur.ID='".$donnees[1]."'");
                       $raw = mysqli_fetch_row($res);
-                      echo '<tr>';
-                      echo '<th scope="row">'.$cpt.'</th>';
                       echo '<td>'.$raw[1].'</td>';
                       echo '<td>'.$raw[2].'</td>';
                       echo '<td>('.$raw[0].')</td>';
                       echo '<td>'.-$donnees[3].'€</td>';
-                      echo "<td><a class='btn btn-primary' role='button' href='action_ami.php?action=delete&id=". $donnees[3] . "'> Supprimer</a></td>";
+                      echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      echo "<td><a class='btn btn-primary' role='button' href='transactions_ami.php?id=". $donnees[1] . "'> Voir les transactions</a></td>";
                       echo '</tr>';
                       $cpt +=1;
                     }
+
                   }
                 echo '</tbody>';
               echo '</table>';  

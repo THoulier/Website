@@ -148,20 +148,22 @@
           echo '<th scope="row">'.$n.'</th>';
           echo '<td>'.$donnees[4].'€';
           //option modification du montant
-          if (isset($_GET["modar"])) {
-            if ($_GET["modar"]==$donnees[0]) {
-              $tabb = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
-              $lignee = mysqli_fetch_row($tabb);
-              echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
-              if (isset($_POST['valeur'])){
-                $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
-                echo("<meta http-equiv='refresh' content='0'; URL=transactions.php");
+          if ($donnees[6]==0){
+            if (isset($_GET["modar"])) {
+              if ($_GET["modar"]==$donnees[0]) {
+                $tabb = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
+                $lignee = mysqli_fetch_row($tabb);
+                echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
+                if (isset($_POST['valeur'])){
+                  $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
+                  echo("<meta http-equiv='refresh' content='0'; URL=transactions.php");
+                }
+              } else {
+                echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
               }
             } else {
               echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
             }
-          } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
           }
           echo '</td>';
 
@@ -178,20 +180,22 @@
 
 
           //option modification du msg explicatif
-          if (isset($_GET["modmsg"])) {
-            if ($_GET["modmsg"]==$donnees[0]) {
-              $tab = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
-              $ligne = mysqli_fetch_row($tab);
-              echo '<form action="" method="post"><input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
-              if(isset($_POST['msg_ex'])){
-                $moo = mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$donnees[0]."'");
-                echo("<meta http-equiv='refresh' content='0'; URL=transactions.php>"); 
-              }
+          if ($donnees[6]==0){
+            if (isset($_GET["modmsg"])) {
+              if ($_GET["modmsg"]==$donnees[0]) {
+                $tab = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
+                $ligne = mysqli_fetch_row($tab);
+                echo '<form action="" method="post"><input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
+                if(isset($_POST['msg_ex'])){
+                  $moo = mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$donnees[0]."'");
+                  echo("<meta http-equiv='refresh' content='0'; URL=transactions.php>"); 
+                }
+              } else {
+                echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
+            }
             } else {
               echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
-          }
-          } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
+            }
           }
           echo '</td>';
 

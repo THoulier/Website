@@ -6,7 +6,7 @@ if (mysqli_connect_errno($bdd_transac)) {
 
 
 if ($_GET['action']=="annuler"){
-    $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=2 WHERE ID='".$_GET['id']."'");
+    $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=2 WHERE ID='".$_GET['id']."'");;
     header("Location:transactions.php");
 }
 if ($_GET['action']=="regler"){

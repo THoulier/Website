@@ -141,7 +141,10 @@
 
         $n=1;
         while ($donnees = ($row = mysqli_fetch_row($ras))){
-          echo '<tr>';
+          if($donnees[6]==2 || $donnees[6]==1){
+            echo '<tr style="background-color: #D3D3D3;">';
+          }else{
+            echo '<tr>';}
           echo '<th scope="row">'.$n.'</th>';
           echo '<td>'.$donnees[4].'€';
           //option modification du montant
@@ -195,13 +198,17 @@
           echo '<td>'.$donnees[5].'</td>';
           if ($donnees[6] == 0){
             echo '<td>Non réglée<td>';
+            echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "'> Régler</a></td>";          
+            echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "'> Annuler</a></td>";
           }elseif ($donnees[6] == 1){
             echo '<td>Réglée<td>';
+            echo '<td></td>';
+            echo '<td></td>';
           }elseif ($donnees[6] == 2){
             echo '<td>Annulée<td>';
+            echo '<td></td>';
+            echo '<td></td>';
           }
-          echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "'> Régler</a></td>";          
-          echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "'> Annuler</a></td>";
           echo '</tr>';
           $n=$n+1;
         }

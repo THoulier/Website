@@ -36,7 +36,7 @@
                 } 
                 elseif ($_GET["id"]==2) {
                   echo '<div class="alert alert-danger" role="alert">';
-                  echo "Vous avez déjà envoyé une demande à cet utilisateur";
+                  echo "Vous avez déjà envoyé une demande à cet utilisateur ou il est déjà votre ami";
                   echo "</div>";
                 }
                 elseif ($_GET["id"]==3) {

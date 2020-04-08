@@ -11,6 +11,13 @@ if (mysqli_connect_errno($bdd_friend)) {
 
 $error ="";
 
+if (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'"))==0) {
+    if (!empty($error)) {
+        $error=$error."&id=4";
+    } else {
+        $error="id=4";
+    }
+} 
 if (empty($_POST['id_to'])) {
     if (!empty($error)) {
         $error=$error."&id=1";
@@ -37,13 +44,7 @@ if ($_POST['id_to'] == $row0[0]) {
     }
 
 } 
-if (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['id_to']."' OR Mail='".$_POST['id_to']."'"))==0) {
-    if (!empty($error)) {
-        $error=$error."&id=4";
-    } else {
-        $error="id=4";
-    }
-} 
+
 $res = mysqli_query($bdd_friend, "SELECT ID FROM Utilisateur WHERE Mail='".$_SESSION['mail']."'");
 $row = mysqli_fetch_row ($res); 
 if (mysqli_num_rows(mysqli_query($bdd_friend,"SELECT Amis.id_to,Amis.id_from FROM Utilisateur INNER JOIN Amis ON Amis.id_to=Utilisateur.ID WHERE Utilisateur.Pseudo='".$_POST['id_to']."' AND Amis.id_from='".$row[0]."'"))==1) {

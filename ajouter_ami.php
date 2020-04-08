@@ -97,7 +97,7 @@
                 echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
               }
               $cpt = 1;
-              $ras = mysqli_query($bdd_friend, "SELECT id_from,id_to,ID,Solde FROM  Amis WHERE etat=1");
+              $ras = mysqli_query($bdd_friend, "SELECT id_from,id_to,ID FROM  Amis WHERE etat=1");
               echo '<table class="table table-hover table-white">';
                 echo '<tbody>';
                   while ($donnees = ($row = mysqli_fetch_row($ras))) {
@@ -109,7 +109,7 @@
                       echo '<td>'.$raw1[1].'</td>';
                       echo '<td>'.$raw1[2].'</td>';
                       echo '<td>('.$raw1[0].')</td>';
-                      echo '<td>'.$donnees[3].'€</td>';
+                      echo color_transaction(get_solde($_SESSION['ID'],$donnees[0]));
                       echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
                       echo "<td><a class='btn btn-primary' role='button' href='transactions_ami.php?id=". $donnees[0] . "'> Voir les transactions</a></td>";
                       echo '</tr>';
@@ -121,7 +121,7 @@
                       echo '<td>'.$raw[1].'</td>';
                       echo '<td>'.$raw[2].'</td>';
                       echo '<td>('.$raw[0].')</td>';
-                      echo '<td>'.-$donnees[3].'€</td>';
+                      echo color_transaction(get_solde($donnees[1],$_SESSION['ID']));
                       echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
                       echo "<td><a class='btn btn-primary' role='button' href='transactions_ami.php?id=". $donnees[1] . "'> Voir les transactions</a></td>";
                       echo '</tr>';

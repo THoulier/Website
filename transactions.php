@@ -14,7 +14,7 @@
 
   <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
      <div class="col-md-6 pt-4 px-0">
-       <h1 class="display-4 font-italic"><p id="welcome">Gestion des transactions</p></h1>
+       <h1 class="display-4 font-italic"><p id="welcome">Gestion des transactions simples</p></h1>
        <p class="lead my-3">Tu peux consulter tes transactions avec tes amis!</p>
        
      </div>

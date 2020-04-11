@@ -23,7 +23,7 @@
         <li class="nav-item">
             <?php
                 if (isset($_SESSION['mail'])) {
-                    echo '<a class="nav-link" href="transactions.php">Gestion des transactions</a>';
+                    echo '<a class="nav-link" href="gestion_transaction.php">Gestion des transactions</a>';
                 }
             ?>
         </li>

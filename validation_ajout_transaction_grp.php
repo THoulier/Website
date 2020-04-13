@@ -9,6 +9,7 @@ if (mysqli_connect_errno($bdd_transac)) {
 }
 $error ="";
 
+
 if (empty($_POST['msg_ex'])) {
     if (!empty($error)) {
         $error=$error."&msg_ex=1";
@@ -57,8 +58,14 @@ if (empty($_POST['montant'])) {
 
 } 
 if (!empty($error)) {
-    header("Location: transaction_grp.php?".$error);
+    if($_POST['choix']=="Manuellement"){
+    header("Location: transaction_grp.php?manuel&".$error);
     exit();
+    }
+    if($_POST['choix']=="Parts"){
+    header("Location: transaction_grp.php?partsegales&".$error);
+    exit();
+    }
 }
 
 

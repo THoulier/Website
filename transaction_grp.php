@@ -24,15 +24,50 @@
   <div class="container">
       <h2>Ajoute une transaction</h2>
       <div class="row">
-      <div class="col-sm-4 ">
+      <form action="pre_validation_ajout_transaction_grp.php" method="post">
+      <div class="col-sm ">
+      Nombre d'utilisateurs cibles: 
+      <input type="number" name="nb" class="p-1"/></br><br>
+      <?php if (isset($_GET["nbr"])){ 
+              if ($_GET["nbr"]==1) {
+                echo '<div class="alert alert-danger" role="alert">';
+                    echo "Vous devez renseigner le nombre d'utilisateurs cibles!";
+                echo "</div>";
+              }
+            }
+            ?>
       Le montant doit être rentré:
-        </br>
-        <button class='btn btn-outline-primary' id='montant_manu'>Manuellement</button>
-        <butoon class='btn btn-outline-primary' id='montant_egal'>Parts égales</butoon>
+      <input type="radio" id="manuel" name="choix" value="Manuellement">
+      <label for="manuel">Manuellement</label>
+      <input type="radio" id="egal" name="choix" value="Parts">
+      <label for="egal">Parts égales</label>
+      <?php if (isset($_GET["case"])){ 
+              if ($_GET["case"]==1) {
+                echo '<div class="alert alert-danger" role="alert">';
+                    echo "Vous devez cocher une case";
+                echo "</div>";
+              }
+            }
+            ?>
+
+
+        <!--<a class='btn btn-outline-primary' id='montant_manu' href='transaction_grp.php?manuel'>Manuellement</a>
+        <a class='btn btn-outline-primary' id='montant_egal' href='transaction_grp.php?partsegales'>Parts égales</a>-->
+        <br><br>
+        <button type="submit" class="btn btn-primary">Créer une transaction groupée</button>
+        <br><br>
       </div>
       </div>
-      <form id='formulaire' action="validation_ajout_transaction_grp.php" method="post">
-      <!--<div class="row">
+      </form>
+
+
+
+      <?php
+      if (isset($_GET['nbnotempty']) && isset($_GET['casenotempty'])){
+        if($_POST['choix']=='Manuellement'){
+
+      echo '<form action="validation_ajout_transaction_grp.php?manu=1" method="post">
+      <div class="row">
         <div class="col-sm ">
           Message explicatif: 
         </div>
@@ -41,9 +76,17 @@
         <div class="col-sm-4">
           <input type="text" name="msg_ex" class="p-2"/>
         </div>
-        <div class="col-sm-8">
-
-        </div>
+        <div class="col-sm-8">';
+          
+            if (isset($_GET["msg_ex"])){ 
+              if ($_GET["msg_ex"]==1) {
+                echo '<div class="alert alert-danger" role="alert">';
+                    echo "Vous devez renseigner un message explicatif !";
+                echo "</div>";
+              }
+            }
+        
+        echo '</div>
       </div>
       <div class="row">
         <div class="col-sm ">
@@ -54,9 +97,27 @@
         <div class="col-sm-4">
           <input type="text" name="pseudo" class="p-2"/>
         </div>
-        <div class="col-sm-8">
-
-        </div>
+        <div class="col-sm-8">';
+          
+            if (isset($_GET["pseudo"])) {
+                if ($_GET["pseudo"]==1) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                        echo "Vous devez renseigner un pseudo ou une adresse mail d'un ami!";
+                    echo "</div>";
+                }
+                if ($_GET["pseudo"]==2) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                        echo "Cet utilisateur n'existe pas";
+                    echo "</div>";
+                }
+                if ($_GET["pseudo"]==3) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                        echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
+                    echo "</div>";
+                }
+            }
+          
+        echo '</div>
       </div>
       <div class="row">
         <div class="col-sm ">
@@ -67,15 +128,125 @@
         <div class="col-sm-4">
           <input type="number" name="montant" class="p-2"/>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-8">';
+          
+            if (isset($_GET["montant"])) {
+              if ($_GET["montant"]==1) {
+                echo '<div class="alert alert-danger" role="alert">';
+                  echo "Vous devez renseigner un montant!";
+                echo "</div>";
+              }
 
+            }
+        
+       echo ' </div>
+      </div>
+      </br>
+      <div class ="row">
+        <div class="col-sm ">
+          <button type="submit" class="btn btn-primary">Ajouter une transaction</button>
         </div>
-      </div>-->
-
-      
+      </div>
     </form>
     </br>
   </div>
+      
+    </form>
+    </br>
+  </div>';}
+  else if (isset($_GET['partsegales'])){
+    echo '<form action="validation_ajout_transaction_grp.php?egal=1" method="post">
+    <div class="row">
+      <div class="col-sm ">
+        Message explicatif: 
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <input type="text" name="msg_ex" class="p-2"/>
+      </div>
+      <div class="col-sm-8">';
+        
+          if (isset($_GET["msg_ex"])){ 
+            if ($_GET["msg_ex"]==1) {
+              echo '<div class="alert alert-danger" role="alert">';
+                  echo "Vous devez renseigner un message explicatif !";
+              echo "</div>";
+            }
+          }
+      
+      echo '</div>
+    </div>
+    <div class="row">
+      <div class="col-sm ">
+        Pseudo ou adresse mail de ton ami:  
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <input type="text" name="pseudo" class="p-2"/>
+      </div>
+      <div class="col-sm-8">';
+        
+          if (isset($_GET["pseudo"])) {
+              if ($_GET["pseudo"]==1) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                      echo "Vous devez renseigner un pseudo ou une adresse mail d'un ami!";
+                  echo "</div>";
+              }
+              if ($_GET["pseudo"]==2) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                      echo "Cet utilisateur n'existe pas";
+                  echo "</div>";
+              }
+              if ($_GET["pseudo"]==3) {
+                  echo '<div class="alert alert-danger" role="alert">';
+                      echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
+                  echo "</div>";
+              }
+          }
+        
+      echo '</div>
+    </div>
+    <div class="row">
+      <div class="col-sm ">
+        Montant:  
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <input type="number" name="montant" class="p-2"/>
+      </div>
+      <div class="col-sm-8">';
+        
+          if (isset($_GET["montant"])) {
+            if ($_GET["montant"]==1) {
+              echo '<div class="alert alert-danger" role="alert">';
+                echo "Vous devez renseigner un montant!";
+              echo "</div>";
+            }
+
+          }
+      
+     echo ' </div>
+    </div>
+    </br>
+    <div class ="row">
+      <div class="col-sm ">
+        <button type="submit" class="btn btn-primary">Ajouter une transaction</button>
+      </div>
+    </div>
+  </form>
+  </br>
+</div>
+    
+  </form>
+  </br>
+</div>';}
+  else {
+    echo '</div>';
+  }}
+  ?>
 
 
 
@@ -197,67 +368,6 @@
       </table>
 
   </div>
-
-<script>
-    var montant_manu = document.getElementById('montant_manu');
-    var div = document.getElementById('formulaire');
-
-
-    montant_manu.addEventListener('click', function() {
-        div.innerHTML += " <div class='row'><div class='col-sm'>Message explicatif: </div></div>";
-        div.innerHTML += '<div class="row"><div class="col-sm-4"><input type="text" name="msg_ex" class="p-2"/></div><div class="col-sm-8">';
-        <?php
-            if (isset($_GET["msg_ex"])){ 
-              if ($_GET["msg_ex"]==1) {
-                echo '<div class="alert alert-danger" role="alert">';
-                    echo "Vous devez renseigner un message explicatif !";
-                echo "</div>";
-              }
-            }
-          ?>
-        div.innerHTML += "<div class='row'><div class='col-sm '>Pseudo ou adresse mail de ton ami:  </div></div><div class='row'><div class='col-sm-4'><input type='text' name='pseudo' class='p-2'/></div><div class='col-sm-8'>";
-        div.innerHTML += "</div></div>";
-        <?php
-            if (isset($_GET["pseudo"])) {
-                if ($_GET["pseudo"]==1) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                        echo "Vous devez renseigner un pseudo ou une adresse mail d'un ami!";
-                    echo "</div>";
-                }
-                if ($_GET["pseudo"]==2) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                        echo "Cet utilisateur n'existe pas";
-                    echo "</div>";
-                }
-                if ($_GET["pseudo"]==3) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                        echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
-                    echo "</div>";
-                }
-            }
-          ?>
-        div.innerHTML += '<div class="row"><div class="col-sm ">Montant: </div></div><div class="row"><div class="col-sm-4"><input type="number" name="montant" class="p-2"/></div><div class="col-sm-8">';
-        div.ineerHTML += '</div></div>';
-        <?php
-            if (isset($_GET["montant"])) {
-              if ($_GET["montant"]==1) {
-                echo '<div class="alert alert-danger" role="alert">';
-                  echo "Vous devez renseigner un montant!";
-                echo "</div>";
-              }
-
-            }
-          ?>
-        div.innerHTML += '<div class ="row"><div class="col-sm "><button type="submit" class="btn btn-primary">Ajouter une transaction</button></div></div>';
-
-    });
-
-
-    var montant_egal = document.getElementById('montant_egal');
-    montant_egal.addEventListener('click', function() {
-        alert("Vous m'avez cliqué !");
-    });
-</script>
 
 
 

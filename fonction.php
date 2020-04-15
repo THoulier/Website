@@ -153,4 +153,32 @@ function display_etat($donnees) {
       }
 }
 
+function display_transac($ras,$bdd_transac) {
+    entete_amis();
+
+        $n=1;
+        while ($donnees = ($row = mysqli_fetch_row($ras))){
+          color_table($donnees);
+          echo '<th scope="row">'.$n.'</th>';
+          display_solde($donnees[0],$bdd_transac,$_SESSION['ID']);
+          //option modification du montant
+          display_modify_solde($donnees,$bdd_transac);
+
+          display_user($_SESSION['ID'], $donnees,$bdd_transac);
+
+
+          echo '<td>'.$donnees[1];
+
+
+          //option modification du msg explicatif
+          display_msg($donnees,$bdd_transac);
+
+          echo '<td>'.$donnees[5].'</td>';
+          display_etat($donnees);
+          echo '</tr>';
+          $n=$n+1;
+        }
+      echo "</tbody>";
+      echo "</table>";
+}
 ?>

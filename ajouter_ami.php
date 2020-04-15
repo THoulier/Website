@@ -110,7 +110,11 @@
                       echo '<td>'.$raw1[2].'</td>';
                       echo '<td>('.$raw1[0].')</td>';
                       echo color_transaction(get_solde($_SESSION['ID'],$donnees[0]));
-                      echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      if (get_solde($donnees[1],$_SESSION['ID']) == 0 ) {
+                        echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      } else {
+                        echo "<td></td>";
+                      }
                       echo "<td><a class='btn btn-primary' role='button' href='transactions_ami.php?id=". $donnees[0] . "'> Voir les transactions</a></td>";
                       echo '</tr>';
                       $cpt +=1;
@@ -122,7 +126,12 @@
                       echo '<td>'.$raw[2].'</td>';
                       echo '<td>('.$raw[0].')</td>';
                       echo color_transaction(get_solde($donnees[1],$_SESSION['ID']));
-                      echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
+                      if (get_solde($donnees[1],$_SESSION['ID']) == 0 ) {
+                        echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[1] . "'> Supprimer</a></td>";
+                      } else {
+                        echo "<td></td>";
+                      }
+                      
                       echo "<td><a class='btn btn-primary' role='button' href='transactions_ami.php?id=". $donnees[1] . "'> Voir les transactions</a></td>";
                       echo '</tr>';
                       $cpt +=1;

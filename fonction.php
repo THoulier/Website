@@ -19,9 +19,9 @@ function get_solde($ID_src,$ID_dst) {
     if (mysqli_connect_errno($bdd)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
     }
-    $res1 = mysqli_query($bdd, "SELECT SUM(Montant) FROM `Transactions` WHERE User_src=".$ID_src." AND User_cible=".$ID_dst);
+    $res1 = mysqli_query($bdd, "SELECT SUM(Montant) FROM `Transactions` WHERE User_src=".$ID_src." AND User_cible=".$ID_dst." AND Statut = 0");
     $row1 = mysqli_fetch_row($res1);
-    $res2 = mysqli_query($bdd, "SELECT SUM(Montant) FROM `Transactions` WHERE User_src=".$ID_dst." AND User_cible=".$ID_src);
+    $res2 = mysqli_query($bdd, "SELECT SUM(Montant) FROM `Transactions` WHERE User_src=".$ID_dst." AND User_cible=".$ID_src." AND Statut = 0");
     $row2 = mysqli_fetch_row($res2);
     if (!empty($row1) && !empty($row2)) {
         return $row2[0]-$row1[0];
@@ -41,6 +41,116 @@ function color_transaction($nb) {
     } else {
         echo '<td style="color: green">'.$nb.'€</td>';
     }
+}
+
+function entete_amis() {
+    echo '<table class="table table-hover table-white">';
+
+    echo '<thead>';
+        echo '<tr>';
+        echo '<td>N°</td>';
+        echo '<td>Montant</td>';
+        echo '<td>Utilisateur</td>';
+        echo '<td>Message explicatif</td>';
+        echo '<td>Date de création</td>';
+        echo '<td>Statut</td>';
+        echo '<td></td>';
+        echo '<td>Actions</td>';
+        echo '<td></td>';
+        echo '</tr>';
+    echo '</thead>';
+
+    echo '<tbody>';
+}
+
+function color_table($donnees) {
+    if($donnees[6]==2 || $donnees[6]==1){
+        echo '<tr style="background-color: #D3D3D3;">';
+    }else{
+        echo '<tr>';
+    }
+}
+
+
+function display_solde($ID_transac,$bdd_transac,$ID_user) {
+    $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ID=".$ID_transac);
+    $res=mysqli_fetch_row($ras);
+    if ($res[2] == $ID_user) {
+        echo '<td style="color: green">'.$res[4].'€';
+    } else {
+        echo '<td style="color: red">'.-$res[4].'€';
+    }
+
+}
+
+function display_modify_solde($donnees,$bdd_transac) {
+    if ($donnees[6]==0){
+        if (isset($_GET["modar"])) {
+          if ($_GET["modar"]==$donnees[0]) {
+            $tabb = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
+            $lignee = mysqli_fetch_row($tabb);
+            echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
+            if (isset($_POST['valeur'])){
+              $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
+              echo("<meta http-equiv='refresh' content='0'; URL=transactions.php");
+            }
+          } else {
+            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
+          }
+        } else {
+          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
+        }
+      }
+      echo '</td>';
+}
+
+function display_user($ID, $donnees,$bdd_transac) {
+    if ($ID == $donnees[2]) {
+        $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[3]."'");
+        $raw1 = mysqli_fetch_row($res1);
+        echo '<td>'.$raw1[0].'</td>';
+    } else {
+        $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[2]."'");
+        $raw1 = mysqli_fetch_row($res1);
+        echo '<td>'.$raw1[0].'</td>';
+    }
+}
+
+function display_msg($donnees,$bdd_transac) {
+    if ($donnees[6]==0){
+        if (isset($_GET["modmsg"])) {
+          if ($_GET["modmsg"]==$donnees[0]) {
+            $tab = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
+            $ligne = mysqli_fetch_row($tab);
+            echo '<form action="" method="post"><input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
+            if(isset($_POST['msg_ex'])){
+              $moo = mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$donnees[0]."'");
+              echo("<meta http-equiv='refresh' content='0'; URL=transactions.php>"); 
+            }
+          } else {
+            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
+          }
+        } else {
+          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
+        }
+      }
+      echo '</td>';
+}
+
+function display_etat($donnees) {
+    if ($donnees[6] == 0){
+        echo '<td>Non réglée<td>';
+        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "'> Régler</a></td>";          
+        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "'> Annuler</a></td>";
+      }elseif ($donnees[6] == 1){
+        echo '<td>Réglée<td>';
+        echo '<td></td>';
+        echo '<td></td>';
+      }elseif ($donnees[6] == 2){
+        echo '<td>Annulée<td>';
+        echo '<td></td>';
+        echo '<td></td>';
+      }
 }
 
 ?>

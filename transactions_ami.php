@@ -38,88 +38,27 @@
         }
       
         $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$_GET['id']."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$_GET['id']."' AND User_src='".$_SESSION['ID']."' ORDER BY Date_creation DESC");
-        echo '<table class="table table-hover table-white">';
-
-        echo '<thead>';
-        echo '<tr>';
-        echo '<td>N°</td>';
-        echo '<td>Montant</td>';
-        echo '<td>Utilisateur source</td>';
-        echo '<td>Utilisateur cible</td>';
-        echo '<td>Message explicatif</td>';
-        echo '<td>Date de création</td>';
-        echo '<td>Statut</td>';
-        echo '<td></td>';
-        echo '<td>Actions</td>';
-        echo '<td></td>';
-        echo '</tr>';
-        echo '</thead>';
-
-        echo '<tbody>';
+        entete_amis();
 
         $n=1;
         while ($donnees = ($row = mysqli_fetch_row($ras))){
-          echo '<tr>';
+          color_table($donnees);
           echo '<th scope="row">'.$n.'</th>';
-          echo '<td>'.$donnees[4].'€';
+          display_solde($donnees[0],$bdd_transac,$_SESSION['ID']);
           //option modification du montant
-          if (isset($_GET["modar"])) {
-            if ($_GET["modar"]==$donnees[0]) {
-              $tabb = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
-              $lignee = mysqli_fetch_row($tabb);
-              echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
-              if (isset($_POST['valeur'])){
-                $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
-                echo("<meta http-equiv='refresh' content='0'; URL=transactions_ami.php");
-              }
-            } else {
-              echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction_ami.php?action=modifymontant&ID=".$donnees[0]."&id=".$_GET['id']."'> Modifier</a></td>";
-            }
-          } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction_ami.php?action=modifymontant&ID=".$donnees[0]."&id=".$_GET['id']."'> Modifier</a></td>";
-          }
-          echo '</td>';
+          display_modify_solde($donnees,$bdd_transac);
 
-          $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[2]."'");
-          $raw1 = mysqli_fetch_row($res1);
-          echo '<td>'.$raw1[0].'</td>';
-
-          $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[3]."'");
-          $raw1 = mysqli_fetch_row($res1);
-          echo '<td>'.$raw1[0].'</td>';
+          display_user($_SESSION['ID'], $donnees,$bdd_transac);
 
 
           echo '<td>'.$donnees[1];
 
 
           //option modification du msg explicatif
-          if (isset($_GET["modmsg"])) {
-            if ($_GET["modmsg"]==$donnees[0]) {
-              $tab = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
-              $ligne = mysqli_fetch_row($tab);
-              echo '<form action="" method="post"><input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
-              if(isset($_POST['msg_ex'])){
-                $moo = mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$donnees[0]."'");
-                echo("<meta http-equiv='refresh' content='0'; URL=transactions_ami.php>"); 
-              }
-            } else {
-              echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction_ami.php?action=modifymsg&ID=". $donnees[0] . "&id=".$_GET['id']."'> Modifier</a></td>";
-          }
-          } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction_ami.php?action=modifymsg&ID=". $donnees[0] . "&id=".$_GET['id']."'> Modifier</a></td>";
-          }
-          echo '</td>';
+          display_msg($donnees,$bdd_transac);
 
           echo '<td>'.$donnees[5].'</td>';
-          if ($donnees[6] == 0){
-            echo '<td>Non réglée<td>';
-          }elseif ($donnees[6] == 1){
-            echo '<td>Réglée<td>';
-          }elseif ($donnees[6] == 2){
-            echo '<td>Annulée<td>';
-          }
-          echo "<td><a class='btn btn-primary' role='button' href='action_transaction_ami.php?action=regler&ID=". $donnees[0] . "&id=".$_GET['id']."'> Régler</a></td>";          
-          echo "<td><a class='btn btn-primary' role='button' href='action_transaction_ami.php?action=annuler&ID=". $donnees[0] . "&id=".$_GET['id']."'> Annuler</a></td>";
+          display_etat($donnees);
           echo '</tr>';
           $n=$n+1;
         }

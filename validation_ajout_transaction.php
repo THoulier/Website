@@ -54,8 +54,14 @@ if (empty($_POST['montant'])) {
     } else {
         $error="montant=1";
     }
+} elseif ($_POST['montant'] < 0) {
+    if (!empty($error)) {
+        $error=$error."&montant=2";
+    } else {
+        $error="montant=2";
+    }
+}
 
-} 
 if (!empty($error)) {
     header("Location: transactions.php?".$error);
     exit();

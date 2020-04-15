@@ -58,23 +58,7 @@
         </div>
         <div class="col-sm-8">
           <?php
-            if (isset($_GET["pseudo"])) {
-                if ($_GET["pseudo"]==1) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                        echo "Vous devez renseigner un pseudo ou une adresse mail d'un ami!";
-                    echo "</div>";
-                }
-                if ($_GET["pseudo"]==2) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                        echo "Cet utilisateur n'existe pas";
-                    echo "</div>";
-                }
-                if ($_GET["pseudo"]==3) {
-                    echo '<div class="alert alert-danger" role="alert">';
-                        echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
-                    echo "</div>";
-                }
-            }
+            error_pseudo();
           ?>
         </div>
       </div>

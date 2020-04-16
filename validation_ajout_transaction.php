@@ -7,7 +7,7 @@ if (mysqli_connect_errno($bdd_transac)) {
     echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
 }
 
-$error = check_arg_transac($_POST['msg_ex'],$_POST['pseudo'],$_POST['montant'],$bdd_transac);
+$error = check_arg_transac($_POST['msg_ex'],$_POST['pseudo'],$_POST['montant']);
 
 if (!empty($error)) {
     header("Location: transactions.php?".$error);

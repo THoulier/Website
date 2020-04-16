@@ -63,7 +63,7 @@ function color_table($donnees) {
 
 
 function display_solde($ID_transac,$bdd_transac) {
-    $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ID=".$_SESSION['ID']);
+    $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ID=".$ID_transac);
     $res=mysqli_fetch_row($ras);
     if ($res[2] == $_SESSION['ID']) {
         echo '<td style="color: green">'.$res[4].'€';

@@ -173,7 +173,7 @@ function display_transac($ras,$bdd_transac,$page) {
 }
 
 
-function check_arg_transac($msg_ex,$pseudo,$montant,$bdd_transac) {
+function check_arg_transac($msg_ex,$pseudo,$montant) {
     $bdd_transac = con();
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();

@@ -22,7 +22,7 @@ if (!empty($error)) {
     exit();
 }
 else{
-    header("Location: transaction_grp.php?nbnotempty&casenotempty");
+    header("Location: transaction_grp.php?choix=".$_POST['choix']."&nb=".$_POST['nb']."");
     exit();
 }
 ?>

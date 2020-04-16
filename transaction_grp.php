@@ -63,13 +63,12 @@
 
 
       <?php
-      if (isset($_GET['nbnotempty']) && isset($_GET['casenotempty'])){
-        if($_POST['choix']=='Manuellement'){
+      if (isset($_GET['choix']) && isset($_GET['nb'])){
 
-      echo '<form action="validation_ajout_transaction_grp.php?manu=1" method="post">
+      echo '<form action="validation_ajout_transaction_grp.php?choix='.$_GET['choix'].'&nb='.$_GET['nb'].'" method="POST">
       <div class="row">
         <div class="col-sm ">
-          Message explicatif: 
+          Message explicatif commun: 
         </div>
       </div>
       <div class="row">
@@ -86,16 +85,19 @@
               }
             }
         
-        echo '</div>
-      </div>
-      <div class="row">
+        echo '</div></div><br>';
+
+
+      
+      for($i=1;$i<=$_GET['nb'];$i++){
+        echo '<div class="row">
         <div class="col-sm ">
-          Pseudo ou adresse mail de ton ami:  
+          Pseudo ou adresse mail de ton ami n°'.$i.':  
         </div>
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <input type="text" name="pseudo" class="p-2"/>
+          <input type="text" name="pseudo'.$i.'" class="p-2"/>
         </div>
         <div class="col-sm-8">';
           
@@ -105,12 +107,12 @@
       </div>
       <div class="row">
         <div class="col-sm ">
-          Montant:  
+          Montant n°'.$i.':  
         </div>
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <input type="number" name="montant" class="p-2"/>
+          <input type="number" name="montant'.$i.'" class="p-2"/>
         </div>
         <div class="col-sm-8">';
           
@@ -125,8 +127,13 @@
         
        echo ' </div>
       </div>
-      </br>
-      <div class ="row">
+      </br>';
+          }
+
+
+
+
+      echo '<div class ="row">
         <div class="col-sm ">
           <button type="submit" class="btn btn-primary">Ajouter une transaction</button>
         </div>
@@ -137,86 +144,13 @@
       
     </form>
     </br>
-  </div>';}
-  else if (isset($_GET['partsegales'])){
-    echo '<form action="validation_ajout_transaction_grp.php?egal=1" method="post">
-    <div class="row">
-      <div class="col-sm ">
-        Message explicatif: 
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4">
-        <input type="text" name="msg_ex" class="p-2"/>
-      </div>
-      <div class="col-sm-8">';
-        
-          if (isset($_GET["msg_ex"])){ 
-            if ($_GET["msg_ex"]==1) {
-              echo '<div class="alert alert-danger" role="alert">';
-                  echo "Vous devez renseigner un message explicatif !";
-              echo "</div>";
-            }
-          }
-      
-      echo '</div>
-    </div>
-    <div class="row">
-      <div class="col-sm ">
-        Pseudo ou adresse mail de ton ami:  
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4">
-        <input type="text" name="pseudo" class="p-2"/>
-      </div>
-      <div class="col-sm-8">';
-        
-      error_pseudo();
-        
-      echo '</div>
-    </div>
-    <div class="row">
-      <div class="col-sm ">
-        Montant:  
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4">
-        <input type="number" name="montant" class="p-2"/>
-      </div>
-      <div class="col-sm-8">';
-        
-          if (isset($_GET["montant"])) {
-            if ($_GET["montant"]==1) {
-              echo '<div class="alert alert-danger" role="alert">';
-                echo "Vous devez renseigner un montant!";
-              echo "</div>";
-            }
-
-          }
-      
-     echo ' </div>
-    </div>
-    </br>
-    <div class ="row">
-      <div class="col-sm ">
-        <button type="submit" class="btn btn-primary">Ajouter une transaction</button>
-      </div>
-    </div>
-  </form>
-  </br>
-</div>
-    
-  </form>
-  </br>
-</div>';}
+  </div>';
+}
+  
   else {
     echo '</div>';
-  }}
+  }
   ?>
-
-
 
 
 

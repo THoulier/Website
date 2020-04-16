@@ -60,10 +60,37 @@
 
       <?php
       if (isset($_GET['choix']) && isset($_GET['nb'])){
-
-      echo '<form action="validation_ajout_transaction_grp.php?choix='.$_GET['choix'].'&nb='.$_GET['nb'].'" method="POST">
-      <div class="row">
+      echo '<form action="validation_ajout_transaction_grp.php?choix='.$_GET['choix'].'&nb='.$_GET['nb'].'" method="POST">';
+      if ($_GET['choix']=='Parts'){
+        echo '<div class="row">
         <div class="col-sm ">
+        Montant total: 
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <input type="number" name="montant_total" class="p-2"/>
+      </div>
+      <div class="col-sm-8">';
+      if (isset($_GET["montant_total"])) {
+        if ($_GET["montant$i"]==1) {
+          echo '<div class="alert alert-danger" role="alert">';
+            echo "Vous devez renseigner un montant!";
+          echo "</div>";
+        }
+        if ($_GET["montant_total"]==2) {
+          echo '<div class="alert alert-danger" role="alert">';
+            echo "Vous devez renseigner un montant positif!";
+          echo "</div>";
+        }
+
+      }
+      echo '</div></div>';
+
+        }
+
+      echo '<div class="row">
+      <div class="col-sm ">
           Message explicatif commun: 
         </div>
       </div>
@@ -105,8 +132,10 @@
         <div class="col-sm ">
           Montant n°'.$i.':  
         </div>
-      </div>
-      <div class="row">
+      </div>';
+
+      if ($_GET['choix']=='Manuellement'){
+      echo '<div class="row">
         <div class="col-sm-4">
           <input type="number" name="montant'.$i.'" class="p-2"/>
         </div>
@@ -125,7 +154,16 @@
               }
 
             }
-        
+          }
+
+      if ($_GET['choix']=='Parts'){
+            echo '<div class="row">
+              <div class="col-sm-4">
+                <input type="number" name="montant'.$i.'" class="p-2" value="2"/>
+              </div><div class="col-sm-8">';
+
+                  }
+                
        echo ' </div>
       </div>
       </br>';

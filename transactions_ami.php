@@ -37,8 +37,7 @@
             echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
         }
       
-        $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$_GET['id']."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$_GET['id']."' AND User_src='".$_SESSION['ID']."' ORDER BY Date_creation DESC");
-        display_transac($ras,$bdd_transac);
+        display_transac("transactions_ami.php",$_GET["id"]);
       ?>
 
   </div>

@@ -131,7 +131,7 @@
   <div class="container marketing">
     <div class="titre"><h2>Historique de tes transactions</h2></div>
       <?php
-        display_transac("transactions.php")
+        display_transac("transactions.php","")
       ?>
     </div>
   </div>

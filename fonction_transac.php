@@ -151,15 +151,17 @@ function display_etat($donnees,$page) {
       }
 }
 
-function display_transac($page) {
+function display_transac($page,$id) {
     entete_amis();
     $bdd_transac = con();
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
     }
-      
-        $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
-
+        if (!empty($id)) {
+            $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ORDER BY Date_creation DESC");
+        } else {
+            $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
+        }
         $n=1;
         while ($donnees = ($row = mysqli_fetch_row($ras))){
           color_table($donnees);

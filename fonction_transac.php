@@ -172,15 +172,7 @@ function display_transac($ras,$bdd_transac,$page) {
       echo "</table>";
 }
 
-
-function check_arg_transac($msg_ex,$pseudo,$montant) {
-    $bdd_transac = con();
-    if (mysqli_connect_errno($bdd_transac)) {
-        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
-    }
-
-    $error ="";
-
+function check_msg($msg_ex,$error) {
     if (empty($msg_ex)) {
         if (!empty($error)) {
             $error=$error."&msg_ex=1";
@@ -189,6 +181,10 @@ function check_arg_transac($msg_ex,$pseudo,$montant) {
         }
 
     } 
+    return $error;
+}
+
+function check_pseudo($pseudo,$error,$bdd_transac) {
     if (empty($pseudo)) {
         if (!empty($error)) {
             $error=$error."&pseudo=1";
@@ -219,7 +215,23 @@ function check_arg_transac($msg_ex,$pseudo,$montant) {
             $error="pseudo=3";
         }
 
-    } 
+    }
+    return $error; 
+}
+
+function check_arg_transac($msg_ex,$pseudo,$montant) {
+    $bdd_transac = con();
+    if (mysqli_connect_errno($bdd_transac)) {
+        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    }
+
+    $error ="";
+
+    $error=check_msg($msg_ex,$error);
+
+    $error=check_pseudo($pseudo,$error,$bdd_transac);
+
+    
     if (empty($montant)) {
         if (!empty($error)) {
             $error=$error."&montant=1";

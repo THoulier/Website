@@ -264,4 +264,16 @@ function check_arg_transac($msg_ex,$pseudo,$montant) {
     return $error;
 }
 
+function friend_display_transac() {
+    $bdd_friend=con();
+    $ras = mysqli_query($bdd_friend, "SELECT id_from,id_to,ID FROM  Amis WHERE etat=1 AND (id_from=".$_SESSION['ID']." OR id_to=".$_SESSION['ID'].")");
+    while ($donnees = ($row = mysqli_fetch_row($ras))) {
+        $friend = get_friend($donnees);
+        echo "<tr>";
+            echo "<td>".$friend."</td>";
+            echo "<td><a class='btn btn-secondary' role='button' href='transactions.php?ami=". $friend. "'> Choisir</a></td>";
+        echo "</tr>";
+    }
+}
+
 ?>

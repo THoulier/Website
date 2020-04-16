@@ -43,7 +43,16 @@ function color_transaction($nb) {
     }
 }
 
-
+function get_friend($donnees) {
+    $bdd_friend=con();
+    if ($donnees[0] != $_SESSION['ID']) {
+        $ras = mysqli_query($bdd_friend, "SELECT Pseudo FROM Utilisateur WHERE ID=".$donnees[0]);
+    } else {
+        $ras = mysqli_query($bdd_friend, "SELECT Pseudo FROM Utilisateur WHERE ID=".$donnees[1]);
+    }
+    $row = mysqli_fetch_row($ras);
+    return $row[0];
+}
 
 
 

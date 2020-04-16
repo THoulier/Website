@@ -68,15 +68,5 @@ if (!empty($error)) {
 }
 
 
-$req = mysqli_query($bdd_transac, "SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['pseudo']."' OR Mail='".$_POST['pseudo']."'");
-
-$user_cible = mysqli_fetch_row($req);
-$user_src = $_SESSION['ID'];
-
-$new_transac = "INSERT INTO Transactions(Msg_exp, User_src, User_cible, Montant) VALUES('$_POST[msg_ex]', $user_src, $user_cible[0],'$_POST[montant]')";
-if (mysqli_query($bdd_transac, $new_transac)) {
-    header("Location: transactions.php");
-} else {
-    echo "Error: " . $new_transac . "<br>" . mysqli_error($bdd_transac);
-}
+new_transaction($bdd_transac,$_POST['pseudo'],"transactions.php",$_POST['msg_ex'],$_POST['montant']);
 ?>

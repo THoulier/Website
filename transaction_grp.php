@@ -49,10 +49,6 @@
               }
             }
             ?>
-
-
-        <!--<a class='btn btn-outline-primary' id='montant_manu' href='transaction_grp.php?manuel'>Manuellement</a>
-        <a class='btn btn-outline-primary' id='montant_egal' href='transaction_grp.php?partsegales'>Parts égales</a>-->
         <br><br>
         <button type="submit" class="btn btn-primary">Créer une transaction groupée</button>
         <br><br>
@@ -101,7 +97,7 @@
         </div>
         <div class="col-sm-8">';
           
-        error_pseudo();
+        error_pseudo_grp($i);
           
         echo '</div>
       </div>
@@ -116,10 +112,15 @@
         </div>
         <div class="col-sm-8">';
           
-            if (isset($_GET["montant"])) {
-              if ($_GET["montant"]==1) {
+            if (isset($_GET["montant$i"])) {
+              if ($_GET["montant$i"]==1) {
                 echo '<div class="alert alert-danger" role="alert">';
                   echo "Vous devez renseigner un montant!";
+                echo "</div>";
+              }
+              if ($_GET["montant$i"]==2) {
+                echo '<div class="alert alert-danger" role="alert">';
+                  echo "Vous devez renseigner un montant positif!";
                 echo "</div>";
               }
 

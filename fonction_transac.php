@@ -173,4 +173,62 @@ function display_transac($ras,$bdd_transac,$page) {
 }
 
 
+function check_arg_transac($msg_ex,$pseudo,$montant,$bdd_transac) {
+    $error ="";
+
+    if (empty($msg_ex)) {
+        if (!empty($error)) {
+            $error=$error."&msg_ex=1";
+        } else {
+            $error="msg_ex=1";
+        }
+
+    } 
+    if (empty($pseudo)) {
+        if (!empty($error)) {
+            $error=$error."&pseudo=1";
+        } else {
+            $error="pseudo=1";
+        }
+
+    } 
+    elseif (mysqli_num_rows(mysqli_query($bdd_transac,"SELECT * FROM Utilisateur WHERE Pseudo='".$pseudo."' OR Mail='".$pseudo."'"))==0) {
+        if (!empty($error)) {
+            $error=$error."&pseudo=2";
+        } else {
+            $error="pseudo=2";
+        }
+    } 
+    elseif ($pseudo == $_SESSION['mail']) {
+        if (!empty($error)) {
+            $error=$error."&pseudo=3";
+        } else {
+            $error="pseudo=3";
+        }
+
+    } 
+    if ($pseudo == $_SESSION['Pseudo']) {
+        if (!empty($error)) {
+            $error=$error."&pseudo=3";
+        } else {
+            $error="pseudo=3";
+        }
+
+    } 
+    if (empty($montant)) {
+        if (!empty($error)) {
+            $error=$error."&montant=1";
+        } else {
+            $error="montant=1";
+        }
+    } elseif ($montant < 0) {
+        if (!empty($error)) {
+            $error=$error."&montant=2";
+        } else {
+            $error="montant=2";
+        }
+    }
+    return $error;
+}
+
 ?>

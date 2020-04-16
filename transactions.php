@@ -109,7 +109,7 @@
         }
       
         $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
-        display_transac($ras,$bdd_transac)
+        display_transac($ras,$bdd_transac,"transactions.php")
       ?>
 
   </div>

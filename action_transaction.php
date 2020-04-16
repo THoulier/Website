@@ -7,11 +7,11 @@ if (mysqli_connect_errno($bdd_transac)) {
 
 if ($_GET['action']=="annuler"){
     $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=2 WHERE ID='".$_GET['id']."'");;
-    header("Location:transactions.php");
+    header("Location:".$_GET['page']);
 }
 if ($_GET['action']=="regler"){
     $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=1 WHERE ID='".$_GET['id']."'");
-    header("Location:transactions.php");
+    header("Location:".$_GET['page']);
 }
 
 
@@ -37,7 +37,7 @@ if ($_GET['action']=="modifymontant"){
 
 } 
 if (!empty($value)) {
-    header("Location: transactions.php?".$value);
+    header("Location: ".$_GET['page']."?".$value);
     exit();
 }
 

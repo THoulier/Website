@@ -73,7 +73,7 @@ function display_solde($ID_transac,$bdd_transac,$ID_user) {
 
 }
 
-function display_modify_solde($donnees,$bdd_transac) {
+function display_modify_solde($donnees,$bdd_transac,$page) {
     if ($donnees[6]==0){
         if (isset($_GET["modar"])) {
           if ($_GET["modar"]==$donnees[0]) {
@@ -85,10 +85,10 @@ function display_modify_solde($donnees,$bdd_transac) {
               echo("<meta http-equiv='refresh' content='0'; URL=transactions.php");
             }
           } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
+            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."'> Modifier</a></td>";
           }
         } else {
-          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."'> Modifier</a></td>";
+          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."'> Modifier</a></td>";
         }
       }
       echo '</td>';
@@ -106,7 +106,7 @@ function display_user($ID, $donnees,$bdd_transac) {
     }
 }
 
-function display_msg($donnees,$bdd_transac) {
+function display_msg($donnees,$bdd_transac,$page) {
     if ($donnees[6]==0){
         if (isset($_GET["modmsg"])) {
           if ($_GET["modmsg"]==$donnees[0]) {
@@ -118,20 +118,20 @@ function display_msg($donnees,$bdd_transac) {
               echo("<meta http-equiv='refresh' content='0'; URL=transactions.php>"); 
             }
           } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
+            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "&page=".$page."'> Modifier</a></td>";
           }
         } else {
-          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "'> Modifier</a></td>";
+          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "&page=".$page."'> Modifier</a></td>";
         }
       }
       echo '</td>';
 }
 
-function display_etat($donnees) {
+function display_etat($donnees,$page) {
     if ($donnees[6] == 0){
         echo '<td>Non réglée<td>';
-        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "'> Régler</a></td>";          
-        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "'> Annuler</a></td>";
+        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "&page=".$page."'> Régler</a></td>";          
+        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "&page=".$page."'> Annuler</a></td>";
       }elseif ($donnees[6] == 1){
         echo '<td>Réglée<td>';
         echo '<td></td>';
@@ -143,7 +143,7 @@ function display_etat($donnees) {
       }
 }
 
-function display_transac($ras,$bdd_transac) {
+function display_transac($ras,$bdd_transac,$page) {
     entete_amis();
 
         $n=1;
@@ -152,7 +152,7 @@ function display_transac($ras,$bdd_transac) {
           echo '<th scope="row">'.$n.'</th>';
           display_solde($donnees[0],$bdd_transac,$_SESSION['ID']);
           //option modification du montant
-          display_modify_solde($donnees,$bdd_transac);
+          display_modify_solde($donnees,$bdd_transac,$page);
 
           display_user($_SESSION['ID'], $donnees,$bdd_transac);
 
@@ -161,10 +161,10 @@ function display_transac($ras,$bdd_transac) {
 
 
           //option modification du msg explicatif
-          display_msg($donnees,$bdd_transac);
+          display_msg($donnees,$bdd_transac,$page);
 
           echo '<td>'.$donnees[5].'</td>';
-          display_etat($donnees);
+          display_etat($donnees,$page);
           echo '</tr>';
           $n=$n+1;
         }

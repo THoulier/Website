@@ -1,6 +1,5 @@
 
 <?php
-include("fonction.php");
 include("fonction_transac.php");
 session_start();
 

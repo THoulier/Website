@@ -62,10 +62,10 @@ function color_table($donnees) {
 }
 
 
-function display_solde($ID_transac,$bdd_transac,$ID_user) {
-    $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ID=".$ID_transac);
+function display_solde($ID_transac,$bdd_transac) {
+    $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ID=".$_SESSION['ID']);
     $res=mysqli_fetch_row($ras);
-    if ($res[2] == $ID_user) {
+    if ($res[2] == $_SESSION['ID']) {
         echo '<td style="color: green">'.$res[4].'€';
     } else {
         echo '<td style="color: red">'.-$res[4].'€';
@@ -73,7 +73,11 @@ function display_solde($ID_transac,$bdd_transac,$ID_user) {
 
 }
 
-function display_modify_solde($donnees,$bdd_transac,$page) {
+function display_modify_solde($donnees,$page) {
+    $bdd_transac = con();
+    if (mysqli_connect_errno($bdd_transac)) {
+        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    }
     if ($donnees[6]==0){
         if (isset($_GET["modar"])) {
           if ($_GET["modar"]==$donnees[0]) {
@@ -94,8 +98,8 @@ function display_modify_solde($donnees,$bdd_transac,$page) {
       echo '</td>';
 }
 
-function display_user($ID, $donnees,$bdd_transac) {
-    if ($ID == $donnees[2]) {
+function display_user($donnees,$bdd_transac) {
+    if ($_SESSION['ID'] == $donnees[2]) {
         $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[3]."'");
         $raw1 = mysqli_fetch_row($res1);
         echo '<td>'.$raw1[0].'</td>';
@@ -106,7 +110,11 @@ function display_user($ID, $donnees,$bdd_transac) {
     }
 }
 
-function display_msg($donnees,$bdd_transac,$page) {
+function display_msg($donnees,$page) {
+    $bdd_transac = con();
+    if (mysqli_connect_errno($bdd_transac)) {
+        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    }
     if ($donnees[6]==0){
         if (isset($_GET["modmsg"])) {
           if ($_GET["modmsg"]==$donnees[0]) {
@@ -143,25 +151,31 @@ function display_etat($donnees,$page) {
       }
 }
 
-function display_transac($ras,$bdd_transac,$page) {
+function display_transac($page) {
     entete_amis();
+    $bdd_transac = con();
+    if (mysqli_connect_errno($bdd_transac)) {
+        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    }
+      
+        $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
 
         $n=1;
         while ($donnees = ($row = mysqli_fetch_row($ras))){
           color_table($donnees);
           echo '<th scope="row">'.$n.'</th>';
-          display_solde($donnees[0],$bdd_transac,$_SESSION['ID']);
+          display_solde($donnees[0],$bdd_transac);
           //option modification du montant
-          display_modify_solde($donnees,$bdd_transac,$page);
+          display_modify_solde($donnees,$page);
 
-          display_user($_SESSION['ID'], $donnees,$bdd_transac);
+          display_user($donnees,$bdd_transac);
 
 
           echo '<td>'.$donnees[1];
 
 
           //option modification du msg explicatif
-          display_msg($donnees,$bdd_transac,$page);
+          display_msg($donnees,$page);
 
           echo '<td>'.$donnees[5].'</td>';
           display_etat($donnees,$page);
@@ -184,7 +198,12 @@ function check_msg($msg_ex,$error) {
     return $error;
 }
 
-function check_pseudo($pseudo,$error,$bdd_transac) {
+function check_pseudo($pseudo,$error) {
+    $bdd_transac = con();
+    if (mysqli_connect_errno($bdd_transac)) {
+        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    }
+    
     if (empty($pseudo)) {
         if (!empty($error)) {
             $error=$error."&pseudo=1";
@@ -220,16 +239,13 @@ function check_pseudo($pseudo,$error,$bdd_transac) {
 }
 
 function check_arg_transac($msg_ex,$pseudo,$montant) {
-    $bdd_transac = con();
-    if (mysqli_connect_errno($bdd_transac)) {
-        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
-    }
+    
 
     $error ="";
 
     $error=check_msg($msg_ex,$error);
 
-    $error=check_pseudo($pseudo,$error,$bdd_transac);
+    $error=check_pseudo($pseudo,$error);
 
     
     if (empty($montant)) {

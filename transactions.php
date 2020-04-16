@@ -102,14 +102,7 @@
   <div class="container marketing">
     <div class="titre"><h2>Historique de tes transactions</h2></div>
       <?php
-      
-        $bdd_transac = con();
-        if (mysqli_connect_errno($bdd_transac)) {
-            echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
-        }
-      
-        $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
-        display_transac($ras,$bdd_transac,"transactions.php")
+        display_transac("transactions.php")
       ?>
 
   </div>

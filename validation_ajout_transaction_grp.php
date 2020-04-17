@@ -1,6 +1,6 @@
 
 <?php
-include("fonction_transac.php");
+include("fonction_error.php");
 session_start();
 $bdd_transac = con();
 if (mysqli_connect_errno($bdd_transac)) {

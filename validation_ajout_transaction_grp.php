@@ -15,6 +15,21 @@ for($i=2;$i<=$_GET['nb'];$i++){
     }
 }
 
+
+if (empty($_GET['montant_total'])) {
+    if (!empty($error)) {
+        $error=$error."&montant_total=1";
+    }else {
+        $error="montant_total=1";
+    }
+}   elseif ($_GET['montant_total'] < 0) {
+    if (!empty($error)) {
+        $error=$error."&montant_total=2";
+    }  else {
+        $error="montant_total=2";
+    }
+}
+
 if (!empty($error)) {
     //echo $error;
     header("Location: transaction_grp.php?choix=".$_GET['choix']."&nb=".$_GET['nb']."&".$error);

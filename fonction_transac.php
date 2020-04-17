@@ -2,6 +2,7 @@
 include("fonction.php");
 
 
+
 function new_transaction($bdd_transac,$pseudo,$page,$mess,$montant) {
     $req = mysqli_query($bdd_transac, "SELECT * FROM Utilisateur WHERE Pseudo='".$pseudo."' OR Mail='".$pseudo."'");
 

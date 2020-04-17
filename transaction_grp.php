@@ -1,7 +1,7 @@
 <?php
-    include("fonction_transac.php");
     session_start();
     include("ressource/head.php");
+    include("fonction_error.php");
 ?>
 
 <body>

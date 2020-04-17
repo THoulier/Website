@@ -72,18 +72,17 @@
         <input type="number" name="montant_total" class="p-2"/>
       </div>
       <div class="col-sm-8">';
-      if (isset($_GET["montant_total"])) {
-        if ($_GET["montant_total"]==1) {
+      if (isset($_GET['montant_total'])) {
+        if ($_GET['montant_total']==1) {
           echo '<div class="alert alert-danger" role="alert">';
             echo "Vous devez renseigner un montant total!";
           echo "</div>";
         }
-        elseif ($_GET["montant_total"]==2) {
+        elseif ($_GET['montant_total']==2) {
           echo '<div class="alert alert-danger" role="alert">';
             echo "Vous devez renseigner un montant total positif!";
           echo "</div>";
         }
-
       }
       echo '</div></div>';
 

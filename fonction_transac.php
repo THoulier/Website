@@ -90,7 +90,7 @@ function display_modify_solde($donnees,$page) {
             echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
             if (isset($_POST['valeur'])){
               $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
-              echo("<meta http-equiv='refresh' content='0'; URL=transactions.php");
+              echo("<meta http-equiv='refresh' content='0'; URL=".$page);
             }
           } else {
             echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."'> Modifier</a></td>";
@@ -98,8 +98,8 @@ function display_modify_solde($donnees,$page) {
         } else {
           echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."'> Modifier</a></td>";
         }
-      }
-      echo '</td>';
+    }
+    echo '</td>';
 }
 
 function display_user($donnees) {
@@ -230,7 +230,23 @@ function display_transac_aux($n,$ras,$page) {
 
 }
 
+function afficher_bouton($page) {
+
+    if (strpos($page,"?")) {
+        echo '<a role="button" href="'.$page.'&mode=0" class="btn btn-primary">Tout</a>';
+        echo '<a role="button" href="'.$page.'&mode=1" class="btn btn-success">Gain</a>';
+        echo '<a role="button" href="'.$page.'&mode=2" class="btn btn-danger">Perte</a>';
+    } else {
+        echo '<a role="button" href="'.$page.'?mode=0" class="btn btn-primary">Tout</a>';
+        echo '<a role="button" href="'.$page.'?mode=1" class="btn btn-success">Gain</a>';
+        echo '<a role="button" href="'.$page.'?mode=2" class="btn btn-danger">Perte</a>';
+    }
+    
+
+}
+
 function display_transac($page,$id,$mode) {
+    afficher_bouton($page);
     entete_amis();
     $ras = selec_display_transac($id,$mode);
     $n=display_transac_aux(1,$ras,$page);

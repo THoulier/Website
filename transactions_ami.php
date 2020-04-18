@@ -31,13 +31,12 @@
   <div class="container marketing">
 
       <?php
-      
-        $bdd_transac = con();
-        if (mysqli_connect_errno($bdd_transac)) {
-            echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+        if (isset($_GET["mode"])) {
+          display_transac("transactions_ami.php"."?id=".$_GET["id"],$_GET["id"],$_GET["mode"]);
+        } else {
+          display_transac("transactions_ami.php"."?id=".$_GET["id"],$_GET["id"],0);
         }
-      
-        display_transac("transactions_ami.php",$_GET["id"],0);
+        
       ?>
 
   </div>

@@ -37,8 +37,13 @@ if ($_GET['action']=="modifymontant"){
 
 } 
 if (!empty($value)) {
-    header("Location: ".$_GET['page']."?".$value);
-    exit();
+    if (strpos($_GET['page'],"?")) {
+        header("Location: ".$_GET['page']."&".$value);
+        exit();
+    } else {
+        header("Location: ".$_GET['page']."?".$value);
+        exit();
+    }
 }
 
 

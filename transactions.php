@@ -131,7 +131,12 @@
   <div class="container marketing">
     <div class="titre"><h2>Historique de tes transactions</h2></div>
       <?php
-        display_transac("transactions.php","",0)
+        if (isset($_GET["mode"])) {
+          display_transac("transactions.php","",$_GET["mode"]);
+        } else {
+          display_transac("transactions.php","",0);
+        }
+        
       ?>
     </div>
   </div>

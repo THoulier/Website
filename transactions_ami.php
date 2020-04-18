@@ -37,7 +37,7 @@
             echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
         }
       
-        display_transac("transactions_ami.php",$_GET["id"]);
+        display_transac("transactions_ami.php",$_GET["id"],0);
       ?>
 
   </div>

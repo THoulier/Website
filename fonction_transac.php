@@ -65,7 +65,8 @@ function color_table($donnees) {
 }
 
 
-function display_solde($ID_transac,$bdd_transac) {
+function display_solde($ID_transac) {
+    $bdd_transac = con();
     $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ID=".$ID_transac);
     $res=mysqli_fetch_row($ras);
     if ($res[2] == $_SESSION['ID']) {
@@ -101,7 +102,8 @@ function display_modify_solde($donnees,$page) {
       echo '</td>';
 }
 
-function display_user($donnees,$bdd_transac) {
+function display_user($donnees) {
+    $bdd_transac = con();
     if ($_SESSION['ID'] == $donnees[2]) {
         $res1 = mysqli_query($bdd_transac, "SELECT Pseudo FROM Utilisateur WHERE Utilisateur.ID='".$donnees[3]."'");
         $raw1 = mysqli_fetch_row($res1);
@@ -154,41 +156,88 @@ function display_etat($donnees,$page) {
       }
 }
 
-function display_transac($page,$id) {
-    entete_amis();
+function selec_display_transac($id,$mode) {
     $bdd_transac = con();
-    if (mysqli_connect_errno($bdd_transac)) {
-        echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    if (empty($id)) {
+        switch ($mode) {
+            case 0:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ) AND Statut = 0 ORDER BY Date_creation DESC");
+                break;
+            case 1:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') AND Statut = 0 ORDER BY Date_creation DESC");
+                break;
+            case 2:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_cible='".$_SESSION['ID']."') AND Statut = 0 ORDER BY Date_creation DESC");
+                break;
+            case 3:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ) AND Statut != 0 ORDER BY Date_creation DESC");
+                break;
+            case 4:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') AND Statut != 0 ORDER BY Date_creation DESC");
+                break;
+            case 5:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_cible='".$_SESSION['ID']."') AND Statut != 0 ORDER BY Date_creation DESC");
+                break;
+        }
+    } else {
+        switch ($mode) {
+            case 0:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ) AND Statut = 0 ORDER BY Date_creation DESC");
+                break;
+            case 1:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_cible='".$id."' AND User_src='".$_SESSION['ID']."' AND Statut = 0 ORDER BY Date_creation DESC");
+                break;
+            case 2:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."'  AND Statut = 0 ORDER BY Date_creation DESC");
+                break;
+            case 3:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ) AND Statut != 0 ORDER BY Date_creation DESC");
+                break;
+            case 4:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_cible='".$id."' AND User_src='".$_SESSION['ID']."' AND Statut != 0 ORDER BY Date_creation DESC");
+                break;
+            case 5:
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."'  AND Statut != 0 ORDER BY Date_creation DESC");
+                break;
+        }
     }
-        if (!empty($id)) {
-            $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ORDER BY Date_creation DESC");
-        } else {
-            $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ORDER BY Date_creation DESC");
-        }
-        $n=1;
-        while ($donnees = ($row = mysqli_fetch_row($ras))){
-          color_table($donnees);
-          echo '<th scope="row">'.$n.'</th>';
-          display_solde($donnees[0],$bdd_transac);
-          //option modification du montant
-          display_modify_solde($donnees,$page);
+    return $ras;
+}
 
-          display_user($donnees,$bdd_transac);
+function display_transac_aux($n,$ras,$page) {
+    while ($donnees = ($row = mysqli_fetch_row($ras))){
+        color_table($donnees);
+        echo '<th scope="row">'.$n.'</th>';
+        display_solde($donnees[0],);
+        //option modification du montant
+        display_modify_solde($donnees,$page);
+
+        display_user($donnees,);
 
 
-          echo '<td>'.$donnees[1];
+        echo '<td>'.$donnees[1];
 
 
-          //option modification du msg explicatif
-          display_msg($donnees,$page);
+        //option modification du msg explicatif
+        display_msg($donnees,$page);
 
-          echo '<td>'.$donnees[5].'</td>';
-          display_etat($donnees,$page);
-          echo '</tr>';
-          $n=$n+1;
-        }
-      echo "</tbody>";
-      echo "</table>";
+        echo '<td>'.$donnees[5].'</td>';
+        display_etat($donnees,$page);
+        echo '</tr>';
+        $n=$n+1;
+    }
+    return $n;
+
+}
+
+function display_transac($page,$id,$mode) {
+    entete_amis();
+    $ras = selec_display_transac($id,$mode);
+    $n=display_transac_aux(1,$ras,$page);
+    $ras = selec_display_transac($id,$mode+3);
+    display_transac_aux($n,$ras,$page);  
+    echo "</tbody>";
+    echo "</table>";
 }
 
 

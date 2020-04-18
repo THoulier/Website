@@ -143,7 +143,10 @@ function display_msg($donnees,$page) {
 function display_etat($donnees,$page) {
     if ($donnees[6] == 0){
         echo '<td>Non réglée<td>';
-        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=regler&id=". $donnees[0] . "&page=".$page."'> Régler</a></td>";          
+        include("ressource/overlay_mess.php");
+        echo '<form action="action_transaction.php?action=regler&page='.$page.'&id='.$donnees[0].'" method="post">';
+        include("ressource/overlay_mess_fin.php");
+                  
         echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "&page=".$page."'> Annuler</a></td>";
       }elseif ($donnees[6] == 1){
         echo '<td>Réglée<td>';
@@ -212,7 +215,7 @@ function display_transac_aux($n,$ras,$page) {
         //option modification du montant
         display_modify_solde($donnees,$page);
 
-        display_user($donnees,);
+        display_user($donnees);
 
 
         echo '<td>'.$donnees[1];

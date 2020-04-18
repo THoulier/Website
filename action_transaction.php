@@ -10,7 +10,8 @@ if ($_GET['action']=="annuler"){
     header("Location:".$_GET['page']);
 }
 if ($_GET['action']=="regler"){
-    $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=1 WHERE ID='".$_GET['id']."'");
+    $date = date("Y-m-d");
+    $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=1 , Msg_fer='".$_POST['mess_clot']."', Date_fermeture='".$date."' WHERE ID='".$_GET['id']."'");
     header("Location:".$_GET['page']);
 }
 

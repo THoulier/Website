@@ -1,5 +1,5 @@
 <?php
-  include("fonction_transac.php");
+  include("ressource/fonction/fonction_transac.php");
     session_start();
     include("ressource/head.php");
 ?>
@@ -52,10 +52,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col">
               <input type="text" name="msg_ex" class="p-2"/>
             </div>
-            <div class="col-sm-8">
+            <div class="col">
               <?php
                 if (isset($_GET["msg_ex"])){ 
                   if ($_GET["msg_ex"]==1) {
@@ -73,7 +73,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col">
                 <?php
                   if (isset($_GET['ami'])) {
                     echo '<input type="text" name="pseudo" value="'.$_GET['ami'].'"class="p-2"/>';
@@ -83,7 +83,7 @@
                   
                 ?>
             </div>
-            <div class="col-sm-8">
+            <div class="col">
               <?php
                 error_pseudo();
               ?>
@@ -95,10 +95,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col">
               <input type="number" name="montant" class="p-2"/>
             </div>
-            <div class="col-sm-8">
+            <div class="col">
               <?php
                 if (isset($_GET["montant"])) {
                   if ($_GET["montant"]==1) {

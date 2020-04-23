@@ -1,5 +1,4 @@
 <?php
-  include("fonction.php");
   session_start();
   include("ressource/head.php");
 ?>

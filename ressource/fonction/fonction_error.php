@@ -168,24 +168,6 @@ function check_arg_transac_grp_bis($pseudo,$montant,$var) {
     return $error;
 }
 
-function error_pseudo_grp($var){
-    if (isset($_GET["pseudo$var"])) {
-        if ($_GET["pseudo$var"]==1) {
-            echo '<div class="alert alert-danger" role="alert">';
-                echo "Vous devez renseigner un pseudo ou une adresse mail d'un ami!";
-            echo "</div>";
-        }
-        if ($_GET["pseudo$var"]==2) {
-            echo '<div class="alert alert-danger" role="alert">';
-                echo "Cet utilisateur n'existe pas";
-            echo "</div>";
-        }
-        if ($_GET["pseudo$var"]==3) {
-            echo '<div class="alert alert-danger" role="alert">';
-                echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
-            echo "</div>";
-        }
-    }
-}
+
 
 ?>

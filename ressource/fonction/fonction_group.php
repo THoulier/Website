@@ -1,5 +1,4 @@
 <?php
-include("ressource/fonction/fonction_error.php");
 
 function check_montant_tot($mont) {
     if (isset($mont)) {
@@ -55,6 +54,26 @@ function get_choix($choix,$i) {
       }else if($choix=='Parts'){
         echo '<input type="number" name="montant'.$i.'" class="p-2" value="" step="any"/>';
       }
+}
+
+function error_pseudo_grp($var){
+    if (isset($_GET["pseudo$var"])) {
+        if ($_GET["pseudo$var"]==1) {
+            echo '<div class="alert alert-danger" role="alert">';
+                echo "Vous devez renseigner un pseudo ou une adresse mail d'un ami!";
+            echo "</div>";
+        }
+        if ($_GET["pseudo$var"]==2) {
+            echo '<div class="alert alert-danger" role="alert">';
+                echo "Cet utilisateur n'existe pas";
+            echo "</div>";
+        }
+        if ($_GET["pseudo$var"]==3) {
+            echo '<div class="alert alert-danger" role="alert">';
+                echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
+            echo "</div>";
+        }
+    }
 }
 
 function affichage_grp_nb($nbr,$choix) {

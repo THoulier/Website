@@ -2,6 +2,7 @@
     session_start();
     include("ressource/head.php");
     include("ressource/fonction/fonction_group.php");
+    include("ressource/fonction/fonction_transac.php");
 ?>
 
 <body>

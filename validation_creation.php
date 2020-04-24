@@ -55,21 +55,21 @@ if (empty($_POST['username'])) {
     }
 } elseif (!preg_match("#^[a-z0-9]+$#",$_POST['username'])) {
     if (!empty($error)) {
-        $error=$error."&mail=1";
-    } else {
-        $error="mail=1";
-    }
-} elseif (strlen($_POST['username'])>25) {
-    if (!empty($error)) {
-        $error=$error."&id=1";
-    } else {
-        $error="id=1";
-    } 
-} elseif (mysqli_num_rows(mysqli_query($bdd_users,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['username']."'"))==1) {
-    if (!empty($error)) {
         $error=$error."&id=2";
     } else {
         $error="id=2";
+    }
+} elseif (strlen($_POST['username'])>25) {
+    if (!empty($error)) {
+        $error=$error."&id=3";
+    } else {
+        $error="id=3";
+    } 
+} elseif (mysqli_num_rows(mysqli_query($bdd_users,"SELECT * FROM Utilisateur WHERE Pseudo='".$_POST['username']."'"))==1) {
+    if (!empty($error)) {
+        $error=$error."&id=4";
+    } else {
+        $error="id=4";
     }
 }
 

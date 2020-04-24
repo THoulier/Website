@@ -15,18 +15,19 @@ for($i=2;$i<=$_GET['nb'];$i++){
     }
 }
 
-
-if (empty($_POST['montant_total'])) {
-    if (!empty($error)) {
-        $error=$error."&montant_total=1";
-    }else {
-        $error="montant_total=1";
-    }
-}   elseif ($_POST['montant_total'] < 0) {
-    if (!empty($error)) {
-        $error=$error."&montant_total=2";
-    }  else {
-        $error="montant_total=2";
+if (isset($_POST['montant_total'])) {
+    if (empty($_POST['montant_total'])) {
+        if (!empty($error)) {
+            $error=$error."&montant_total=1";
+        }else {
+            $error="montant_total=1";
+        }
+    }   elseif ($_POST['montant_total'] < 0) {
+        if (!empty($error)) {
+            $error=$error."&montant_total=2";
+        }  else {
+            $error="montant_total=2";
+        }
     }
 }
 

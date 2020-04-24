@@ -110,7 +110,7 @@
                       echo '<td>'.$raw1[2].'</td>';
                       echo '<td>('.$raw1[0].')</td>';
                       echo color_transaction(get_solde($_SESSION['ID'],$donnees[0]));
-                      if (get_solde($donnees[1],$_SESSION['ID']) == 0 ) {
+                      if (get_solde($_SESSION['ID'],$donnees[0]) == 0 ) {
                         echo "<td><a class='btn btn-secondary' role='button' href='action_ami.php?action=delete&id=". $donnees[2] . "'> Supprimer</a></td>";
                       } else {
                         echo "<td></td>";

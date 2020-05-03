@@ -47,9 +47,9 @@ function entete_amis() {
         echo '<td>Message explicatif</td>';
         echo '<td>Date de création</td>';
         echo '<td>Statut</td>';
-        echo '<td></td>';
-        echo '<td>Actions</td>';
-        echo '<td></td>';
+        echo "<td></td>";
+        echo '<td>Régler ou <br>Date de fermeture</td>';
+        echo '<td>Annuler ou <br>Message de clôture</td>';
         echo '</tr>';
     echo '</thead>';
 
@@ -143,19 +143,16 @@ function display_msg($donnees,$page) {
 function display_etat($donnees,$page) {
     if ($donnees[6] == 0){
         echo '<td>Non réglée<td>';
-        include("ressource/overlay_mess.php");
-        echo '<form action="action_transaction.php?action=regler&page='.$page.'&id='.$donnees[0].'" method="post">';
-        include("ressource/overlay_mess_fin.php");
-                  
-        echo "<td><a class='btn btn-primary' role='button' href='action_transaction.php?action=annuler&id=". $donnees[0] . "&page=".$page."'> Annuler</a></td>";
+        echo "<td><input type='radio' name='$donnees[0]' value='regler'></td>";
+        echo "<td><input type='radio' name='$donnees[0]' value='annuler'></td>";
       }elseif ($donnees[6] == 1){
         echo '<td>Réglée<td>';
-        echo '<td></td>';
-        echo '<td></td>';
+        echo "<td>$donnees[7]</td>";
+        echo "<td>$donnees[8]</td>";
       }elseif ($donnees[6] == 2){
         echo '<td>Annulée<td>';
-        echo '<td></td>';
-        echo '<td></td>';
+        echo "<td>$donnees[7]</td>";
+        echo "<td>$donnees[8]</td>";
       }
 }
 
@@ -235,20 +232,27 @@ function display_transac_aux($n,$ras,$page) {
 
 function afficher_bouton($page) {
 
-    if (strpos($page,"?")) {
-        echo '<a role="button" href="'.$page.'&mode=0" class="btn btn-primary">Tout</a>';
-        echo '<a role="button" href="'.$page.'&mode=1" class="btn btn-success">Gain</a>';
-        echo '<a role="button" href="'.$page.'&mode=2" class="btn btn-danger">Perte</a>';
-    } else {
-        echo '<a role="button" href="'.$page.'?mode=0" class="btn btn-primary">Tout</a>';
-        echo '<a role="button" href="'.$page.'?mode=1" class="btn btn-success">Gain</a>';
-        echo '<a role="button" href="'.$page.'?mode=2" class="btn btn-danger">Perte</a>';
-    }
-    
+    echo '<div class="row">';
+        echo '<div class="col-10">'; 
+            if (strpos($page,"?")) {
+                echo '<a role="button" href="'.$page.'&mode=0" class="btn btn-primary">Tout</a>';
+                echo '<a role="button" href="'.$page.'&mode=1" class="btn btn-success">Gain</a>';
+                echo '<a role="button" href="'.$page.'&mode=2" class="btn btn-danger">Perte</a>';
+            } else {
+                echo '<a role="button" href="'.$page.'?mode=0" class="btn btn-primary">Tout</a>';
+                echo '<a role="button" href="'.$page.'?mode=1" class="btn btn-success">Gain</a>';
+                echo '<a role="button" href="'.$page.'?mode=2" class="btn btn-danger">Perte</a>';
+            }
+        echo "</div>";
+        echo '<div class="col">';
+            include("ressource/overlay.php");
+        echo "</div>";
+    echo "</div>";
 
 }
 
 function display_transac($page,$id,$mode) {
+    echo "<form action='action_transaction.php?page=$page' method='POST'>";
     afficher_bouton($page);
     entete_amis();
     $ras = selec_display_transac($id,$mode);
@@ -257,6 +261,7 @@ function display_transac($page,$id,$mode) {
     display_transac_aux($n,$ras,$page);  
     echo "</tbody>";
     echo "</table>";
+    echo "</form>";
 }
 
 

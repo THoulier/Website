@@ -116,6 +116,12 @@
               ?>
             </div>
           </div>
+          <div class="row">
+            <div class="col">
+              <input type='radio' name='mode' value='moi' checked>Je lui dois
+              <input type='radio' name='mode' value='lui'>Il me doit
+            </div>
+          </div>
           </br>
           <div class ="row">
             <div class="col-sm ">

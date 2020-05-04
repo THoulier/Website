@@ -6,14 +6,16 @@ if (mysqli_connect_errno($bdd_transac)) {
 
 
 
+
 foreach ($_POST as $key => $val) {
     if ($key != "mess_clot") {
+        $mess=htmlentities($_POST['mess_clot'],ENT_QUOTES);
         if ($val == "regler") {
             $date = date("Y-m-d");
-            $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=1 , Msg_fer='".$_POST['mess_clot']."', Date_fermeture='".$date."' WHERE ID='".$key."'");
+            $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=1 , Msg_fer='".$mess."', Date_fermeture='".$date."' WHERE ID='".$key."'");
         } else {
             $date = date("Y-m-d");
-            $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=2 , Msg_fer='".$_POST['mess_clot']."', Date_fermeture='".$date."' WHERE ID='".$key."'");
+            $res = mysqli_query($bdd_transac, "UPDATE Transactions SET Statut=2 , Msg_fer='".$mess."', Date_fermeture='".$date."' WHERE ID='".$key."'");
         }
     }
 }

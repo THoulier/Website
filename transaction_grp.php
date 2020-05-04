@@ -128,7 +128,7 @@
     var montanttot = document.getElementsByName("montant_total");
     montanttot[0].addEventListener('change',function(e){
     for (var i=1;i<=<?php echo $_GET['nb']; ?>;i++){
-      document.getElementsByName("montant"+i)[0].value = montanttot[0].value/<?php echo $_GET['nb']; ?>;
+      document.getElementsByName("montant"+i)[0].value =( montanttot[0].value/<?php echo $_GET['nb']; ?>).toFixed(2);
     }
     });
 

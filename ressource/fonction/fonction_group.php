@@ -24,7 +24,7 @@ function choix_part($part,$tot) {
         echo '</div>';
         echo '<div class="row">';
             echo '<div class="col-sm-4">';
-                echo '<input type="number" name="montant_total" class="p-2"/>';
+                echo '<input type="number" name="montant_total" class="p-2" step="0.01"/>';
             echo '</div>';
             echo '<div class="col-sm-8">';
                 check_montant_tot($tot);
@@ -50,9 +50,9 @@ function error_monanti($i) {
 
 function get_choix($choix,$i) {
     if ($choix=='Manuellement'){
-        echo '<input type="number" name="montant'.$i.'" class="p-2"/>';
+        echo '<input type="number" name="montant'.$i.'" class="p-2" step="0.01"/>';
       }else if($choix=='Parts'){
-        echo '<input type="number" name="montant'.$i.'" class="p-2" value="" step="any"/>';
+        echo '<input type="number" name="montant'.$i.'" class="p-2" value="" step="0.01"/>';
       }
 }
 

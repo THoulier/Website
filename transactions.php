@@ -96,7 +96,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <input type="number" name="montant" class="p-2"/>
+              <input type="number" name="montant" class="p-2" step="0.01"/>
             </div>
             <div class="col">
               <?php

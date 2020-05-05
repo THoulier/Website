@@ -103,10 +103,11 @@
   <div class="container marketing">
     <div class="titre"><h2>Historique de tes transactions</h2></div>
       <?php
+        $submode = (isset($_GET["submode"])) ? $_GET["submode"] : 0 ;
         if (isset($_GET["mode"])) {
-          display_transac("transaction_grp.php","",$_GET["mode"]);
+          display_transac("transaction_grp.php","",$_GET["mode"],$submode);
         } else {
-          display_transac("transaction_grp.php","",0);
+          display_transac("transaction_grp.php","",0,$submode);
         }
         
       ?>

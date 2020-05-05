@@ -24,11 +24,11 @@ function get_solde($ID_src,$ID_dst) {
     $res2 = mysqli_query($bdd, "SELECT SUM(Montant) FROM `Transactions` WHERE User_src=".$ID_dst." AND User_cible=".$ID_src." AND Statut = 0");
     $row2 = mysqli_fetch_row($res2);
     if (!empty($row1) && !empty($row2)) {
-        return $row2[0]-$row1[0];
+        return round(($row2[0]-$row1[0]),2);
     } elseif (!empty($row1) && empty($row2)) {
-        return -$row1[0];
+        return round((-$row1[0]),2);
     } elseif (!empty($row2) && empty($row1)) {
-        return $row2[0];
+        return round($row2[0],2);
     } else {
         return 0;
     }

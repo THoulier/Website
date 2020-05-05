@@ -41,16 +41,25 @@ function error_pseudo(){
         }
     }
 }
-function entete_amis() {
+function entete_amis($page,$submode) {
     echo '<table class="table table-hover table-white">';
-
+    $page .= strpos($page,"?") ? '&' : '?';
     echo '<thead>';
         echo '<tr>';
         echo '<td>N°</td>';
-        echo '<td>Montant</td>';
-        echo '<td>Utilisateur</td>';
+        if ($submode==1) {
+            echo '<td><a href="'.$page.'submode=2">Montant </a></td>';
+        } else {
+            echo '<td><a href="'.$page.'submode=1">Montant </a></td>';
+        }
+        
+        echo '<td>Utilisateur</a></td>';
         echo '<td>Message explicatif</td>';
-        echo '<td>Date de création</td>';
+        if ($submode==4) {
+            echo '<td><a href="'.$page.'submode=3">Date de création</a></td>';
+        } else {
+            echo '<td><a href="'.$page.'submode=4">Date de création</a></td>';
+        }
         echo '<td>Statut</td>';
         echo "<td></td>";
         echo '<td>Régler ou <br>Date de fermeture</td>';
@@ -161,48 +170,50 @@ function display_etat($donnees,$page) {
       }
 }
 
-function selec_display_transac($id,$mode) {
+function selec_display_transac($id,$mode,$submode) {
     $bdd_transac = con();
+    $array = array("Date_creation DESC","Montant DESC","Montant ASC","Date_creation DESC","Date_creation ASC");
+    $submode = $array[$submode];
     if (empty($id)) {
         switch ($mode) {
             case 0:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ) AND Statut = 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ) AND Statut = 0 ORDER BY $submode ");
                 break;
             case 1:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') AND Statut = 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') AND Statut = 0 ORDER BY $submode ");
                 break;
             case 2:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_cible='".$_SESSION['ID']."') AND Statut = 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_cible='".$_SESSION['ID']."') AND Statut = 0 ORDER BY $submode ");
                 break;
             case 3:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ) AND Statut != 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( (User_src='".$_SESSION['ID']."') OR (User_cible='".$_SESSION['ID']."') ) AND Statut != 0 ORDER BY $submode ");
                 break;
             case 4:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') AND Statut != 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_src='".$_SESSION['ID']."') AND Statut != 0 ORDER BY $submode ");
                 break;
             case 5:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_cible='".$_SESSION['ID']."') AND Statut != 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE (User_cible='".$_SESSION['ID']."') AND Statut != 0 ORDER BY $submode ");
                 break;
         }
     } else {
         switch ($mode) {
             case 0:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ) AND Statut = 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ) AND Statut = 0 ORDER BY $submode ");
                 break;
             case 1:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_cible='".$id."' AND User_src='".$_SESSION['ID']."' AND Statut = 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_cible='".$id."' AND User_src='".$_SESSION['ID']."' AND Statut = 0 ORDER BY $submode ");
                 break;
             case 2:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."'  AND Statut = 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."'  AND Statut = 0 ORDER BY $submode ");
                 break;
             case 3:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ) AND Statut != 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE ( User_src='".$id."' AND User_cible='".$_SESSION['ID']."' OR User_cible='".$id."' AND User_src='".$_SESSION['ID']."' ) AND Statut != 0 ORDER BY $submode ");
                 break;
             case 4:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_cible='".$id."' AND User_src='".$_SESSION['ID']."' AND Statut != 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_cible='".$id."' AND User_src='".$_SESSION['ID']."' AND Statut != 0 ORDER BY $submode ");
                 break;
             case 5:
-                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."'  AND Statut != 0 ORDER BY Date_creation DESC");
+                $ras = mysqli_query($bdd_transac, "SELECT * FROM  Transactions WHERE User_src='".$id."' AND User_cible='".$_SESSION['ID']."'  AND Statut != 0 ORDER BY $submode ");
                 break;
         }
     }
@@ -256,13 +267,13 @@ function afficher_bouton($page) {
 
 }
 
-function display_transac($page,$id,$mode) {
+function display_transac($page,$id,$mode,$submode) {
     echo "<form action='action_transaction.php?page=$page' method='POST'>";
     afficher_bouton($page);
-    entete_amis();
-    $ras = selec_display_transac($id,$mode);
+    entete_amis($page,$submode);
+    $ras = selec_display_transac($id,$mode,$submode);
     $n=display_transac_aux(1,$ras,$page);
-    $ras = selec_display_transac($id,$mode+3);
+    $ras = selec_display_transac($id,$mode+3,$submode);
     display_transac_aux($n,$ras,$page);  
     echo "</tbody>";
     echo "</table>";

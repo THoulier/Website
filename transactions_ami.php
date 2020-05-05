@@ -31,10 +31,11 @@
   <div class="container marketing">
 
       <?php
+        $submode = (isset($_GET["submode"])) ? $_GET["submode"] : 0 ;
         if (isset($_GET["mode"])) {
-          display_transac("transactions_ami.php"."?id=".$_GET["id"],$_GET["id"],$_GET["mode"]);
+          display_transac("transactions_ami.php"."?id=".$_GET["id"],$_GET["id"],$_GET["mode"],$submode);
         } else {
-          display_transac("transactions_ami.php"."?id=".$_GET["id"],$_GET["id"],0);
+          display_transac("transactions_ami.php"."?id=".$_GET["id"],$_GET["id"],0,$submode);
         }
         
       ?>

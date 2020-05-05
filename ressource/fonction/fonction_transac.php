@@ -41,9 +41,13 @@ function error_pseudo(){
         }
     }
 }
-function entete_amis($page,$submode) {
+function entete_amis($page,$submode,$mode) {
     echo '<table class="table table-hover table-white">';
-    $page .= strpos($page,"?") ? '&' : '?';
+    if (strpos($page,"?")) {
+        $page .= empty($mode) ? "&" : "&mode=$mode&";
+    } else {
+        $page .= empty($mode) ? "?" : "?mode=$mode&";
+    }
     echo '<thead>';
         echo '<tr>';
         echo '<td>N°</td>';
@@ -270,7 +274,7 @@ function afficher_bouton($page) {
 function display_transac($page,$id,$mode,$submode) {
     echo "<form action='action_transaction.php?page=$page' method='POST'>";
     afficher_bouton($page);
-    entete_amis($page,$submode);
+    entete_amis($page,$submode,$mode);
     $ras = selec_display_transac($id,$mode,$submode);
     $n=display_transac_aux(1,$ras,$page);
     $ras = selec_display_transac($id,$mode+3,$submode);

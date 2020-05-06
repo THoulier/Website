@@ -99,7 +99,10 @@ function display_solde($ID_transac) {
 
 }
 
-function display_modify_solde($donnees,$page,$mode,$submode) {
+function display_modify_solde($donnees,$tab) {
+    $page=$tab['page'];
+    $mode=$tab['mode'];
+    $submode=$tab['submode'];
     $bdd_transac = con();
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
@@ -137,8 +140,11 @@ function display_user($donnees) {
     }
 }
 
-function display_msg($donnees,$page,$mode,$submode) {
+function display_msg($donnees,$tab) {
     $bdd_transac = con();
+    $page=$tab['page'];
+    $mode=$tab['mode'];
+    $submode=$tab['submode'];
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
     }
@@ -241,7 +247,7 @@ function display_transac_aux($tab) {
         echo '<th scope="row">'.$n.'</th>';
         display_solde($donnees[0]);
         //option modification du montant
-        display_modify_solde($donnees,$page,$mode,$submode);
+        display_modify_solde($donnees,compact('page','mode','submode'));
 
         display_user($donnees);
 
@@ -250,7 +256,7 @@ function display_transac_aux($tab) {
 
 
         //option modification du msg explicatif
-        display_msg($donnees,$page,$mode,$submode);
+        display_msg($donnees,compact('page','mode','submode'));
 
         echo '<td>'.$donnees[5].'</td>';
         display_etat($donnees,$page);

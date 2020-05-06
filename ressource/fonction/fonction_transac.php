@@ -95,7 +95,7 @@ function display_solde($ID_transac) {
 
 }
 
-function display_modify_solde($donnees,$page) {
+function display_modify_solde($donnees,$page,$mode,$submode) {
     $bdd_transac = con();
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
@@ -111,10 +111,10 @@ function display_modify_solde($donnees,$page) {
               echo("<meta http-equiv='refresh' content='0'; URL=".$page);
             }
           } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."'> Modifier</a></td>";
+            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."&mode=$mode&submode=$submode'> Modifier</a></td>";
           }
         } else {
-          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."'> Modifier</a></td>";
+          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."&mode=$mode&submode=$submode'> Modifier</a></td>";
         }
     }
     echo '</td>';
@@ -133,10 +133,17 @@ function display_user($donnees) {
     }
 }
 
-function display_msg($donnees,$page) {
+function display_msg($donnees,$page,$mode,$submode) {
     $bdd_transac = con();
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
+    }
+    $mode = empty($mode) ? "" : "mode=".$mode;
+    $submode = empty($submode) ? "" : "submode=".$submode;
+    if (strpos($page,"?")) {
+        $page .= '&'.$mode.'&'.$submode;
+    } else {
+        $page .= '?'.$mode.'&'.$submode;
     }
     if ($donnees[6]==0){
         if (isset($_GET["modmsg"])) {
@@ -224,13 +231,13 @@ function selec_display_transac($id,$mode,$submode) {
     return $ras;
 }
 
-function display_transac_aux($n,$ras,$page) {
+function display_transac_aux($n,$ras,$page,$mode,$submode) {
     while ($donnees = ($row = mysqli_fetch_row($ras))){
         color_table($donnees);
         echo '<th scope="row">'.$n.'</th>';
-        display_solde($donnees[0],);
+        display_solde($donnees[0]);
         //option modification du montant
-        display_modify_solde($donnees,$page);
+        display_modify_solde($donnees,$page,$mode,$submode);
 
         display_user($donnees);
 
@@ -239,7 +246,7 @@ function display_transac_aux($n,$ras,$page) {
 
 
         //option modification du msg explicatif
-        display_msg($donnees,$page);
+        display_msg($donnees,$page,$mode,$submode);
 
         echo '<td>'.$donnees[5].'</td>';
         display_etat($donnees,$page);
@@ -276,9 +283,9 @@ function display_transac($page,$id,$mode,$submode) {
     afficher_bouton($page);
     entete_amis($page,$submode,$mode);
     $ras = selec_display_transac($id,$mode,$submode);
-    $n=display_transac_aux(1,$ras,$page);
+    $n=display_transac_aux(1,$ras,$page,$mode,$submode);
     $ras = selec_display_transac($id,$mode+3,$submode);
-    display_transac_aux($n,$ras,$page);  
+    display_transac_aux($n,$ras,$page,$mode,$submode);  
     echo "</tbody>";
     echo "</table>";
     echo "</form>";

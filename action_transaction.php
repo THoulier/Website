@@ -34,7 +34,8 @@ if ($_GET['action']=="regler"){
     header("Location:".$_GET['page']);
 }
 */
-
+$mode = empty($_GET["mode"]) ? "" : "&mode=".$_GET["mode"];
+$submode = empty($_GET["submode"]) ? "" : "&submode=".$_GET["submode"];
 
 $value ="";
 if (isset($_GET['action'])) {
@@ -58,12 +59,13 @@ if (isset($_GET['action'])) {
     } 
     
 }
+
 if (!empty($value)) {
     if (strpos($_GET['page'],"?")) {
-        header("Location: ".$_GET['page']."&".$value);
+        header("Location: ".$_GET['page']."&".$value.$mode.$submode);
         exit();
     } else {
-        header("Location: ".$_GET['page']."?".$value);
+        header("Location: ".$_GET['page']."?".$value.$mode.$submode);
         exit();
     }
 } else {

@@ -178,7 +178,9 @@ function display_etat($donnees,$page) {
       }
 }
 
-function selec_display_transac($id,$mode,$submode) {
+function selec_display_transac($tab,$submode) {
+    $id=$tab['id'];
+    $mode=$tab['mode'];
     $bdd_transac = con();
     $array = array("Date_creation DESC","Montant DESC","Montant ASC","Date_creation DESC","Date_creation ASC");
     $submode = $array[$submode];
@@ -284,10 +286,12 @@ function display_transac($page,$id,$mode,$submode) {
     echo "<form action='action_transaction.php?page=$page' method='POST'>";
     afficher_bouton($page);
     entete_amis($page,$submode,$mode);
-    $ras = selec_display_transac($id,$mode,$submode);
+    $ras = selec_display_transac(compact("id","mode"),$submode);
     $n=1;
     $n=display_transac_aux(compact("n","ras","page","mode","submode"));
-    $ras = selec_display_transac($id,$mode+3,$submode);
+    $mode+=3;
+    $ras = selec_display_transac(compact("id","mode"),$submode);
+    $mode-=3;
     display_transac_aux(compact("n","ras","page","mode","submode"));  
     echo "</tbody>";
     echo "</table>";

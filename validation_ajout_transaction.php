@@ -11,6 +11,12 @@ if (!empty($error)) {
     exit();
 }
 
+$pseudo = $_POST['pseudo'];
+$page = "transactions.php";
+$msg_ex = $_POST['msg_ex'];
+$montant = $_POST['montant'];
+$mode = $_POST['mode'];
 
-new_transaction($_POST['pseudo'],"transactions.php",$_POST['msg_ex'],$_POST['montant'],$_POST['mode']);
+
+new_transaction(compact("pseudo","page","msg_ex","montant","mode"));
 ?>

@@ -37,8 +37,19 @@ if (!empty($error)) {
     exit();
 }
 
+$pseudo = $_POST["pseudo$i"];
+$page = "transaction_grp.php";
+$msg_ex = $_POST['msg_ex'];
+$montant = $_POST["montant$i"];
+$mode = "moi";
+
 for($i=1;$i<=$_GET['nb'];$i++){
-    new_transaction($bdd_transac,$_POST["pseudo$i"],"transaction_grp.php",$_POST['msg_ex'],$_POST["montant$i"]);
+    $pseudo = $_POST["pseudo$i"];
+    $page = "transaction_grp.php";
+    $msg_ex = $_POST['msg_ex'];
+    $montant = $_POST["montant$i"];
+    $mode = "moi";
+    new_transaction(compact("pseudo","page","msg_ex","montant","mode"));
 
 }
 

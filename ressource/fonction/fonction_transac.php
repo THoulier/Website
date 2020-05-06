@@ -3,7 +3,12 @@ include("ressource/fonction/fonction.php");
 
 
 
-function new_transaction($pseudo,$page,$mess,$montant,$mode) {
+function new_transaction($tab) {
+    $pseudo = $tab['pseudo'];
+    $page = $tab["page"];
+    $mess = $tab['msg_ex'];
+    $montant = $tab['montant'];
+    $mode = $tab['mode'];
     $bdd_transac=con();
     $req = mysqli_query($bdd_transac, "SELECT * FROM Utilisateur WHERE Pseudo='".$pseudo."' OR Mail='".$pseudo."'");
     $mess=htmlentities($mess,ENT_QUOTES);
@@ -16,7 +21,6 @@ function new_transaction($pseudo,$page,$mess,$montant,$mode) {
     }
     if (mysqli_query($bdd_transac, $new_transac)) {
         header("Location: ".$page);
-        echo $new_transac;
     } else {
         echo "Error: " . $new_transac . "<br>" . mysqli_error($bdd_transac);
     }
@@ -105,11 +109,11 @@ function display_modify_solde($donnees,$page,$mode,$submode) {
           if ($_GET["modar"]==$donnees[0]) {
             $tabb = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
             $lignee = mysqli_fetch_row($tabb);
-            echo '<form action="" method="post"><input type="number" name="valeur" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></form></td>';
-            if (isset($_POST['valeur'])){
-              $mo = mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$donnees[0]."'");
-              echo("<meta http-equiv='refresh' content='0'; URL=".$page);
-            }
+            echo "<input type='hidden' name='id' value='$donnees[0]'>";
+            echo "<input type='hidden' name='page' value='$page'>";
+            echo "<input type='hidden' name='mode' value='$mode'>";
+            echo "<input type='hidden' name='submode' value='$submode'>";
+            echo '<input type="number" name="valeur" step="0.01" value="'.$lignee[1].'"/><input type="submit" value="Enregistrer"/></td>';
           } else {
             echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymontant&id=".$donnees[0]."&page=".$page."&mode=$mode&submode=$submode'> Modifier</a></td>";
           }
@@ -138,28 +142,21 @@ function display_msg($donnees,$page,$mode,$submode) {
     if (mysqli_connect_errno($bdd_transac)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
     }
-    $mode = empty($mode) ? "" : "mode=".$mode;
-    $submode = empty($submode) ? "" : "submode=".$submode;
-    if (strpos($page,"?")) {
-        $page .= '&'.$mode.'&'.$submode;
-    } else {
-        $page .= '?'.$mode.'&'.$submode;
-    }
     if ($donnees[6]==0){
         if (isset($_GET["modmsg"])) {
           if ($_GET["modmsg"]==$donnees[0]) {
             $tab = mysqli_query($bdd_transac, "SELECT Msg_exp,Montant FROM Transactions WHERE ID='".$donnees[0]."'");
             $ligne = mysqli_fetch_row($tab);
-            echo '<form action="" method="post"><input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
-            if(isset($_POST['msg_ex'])){
-              $moo = mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$donnees[0]."'");
-              echo("<meta http-equiv='refresh' content='0'; URL=transactions.php>"); 
-            }
+            echo "<input type='hidden' name='id' value='$donnees[0]'>";
+            echo "<input type='hidden' name='page' value='$page'>";
+            echo "<input type='hidden' name='mode' value='$mode'>";
+            echo "<input type='hidden' name='submode' value='$submode'>";
+            echo '<input type="text" name="msg_ex" value="'.$ligne[0].'"/><input type="submit" value="Enregistrer"/></form></td>';
           } else {
-            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "&page=".$page."'> Modifier</a></td>";
+            echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "&page=".$page."&mode=$mode&submode=$submode'> Modifier</a></td>";
           }
         } else {
-          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "&page=".$page."'> Modifier</a></td>";
+          echo "</br><a class='btn btn-secondary btn-sm' role='button' href='action_transaction.php?action=modifymsg&id=". $donnees[0] . "&page=".$page."&mode=$mode&submode=$submode'> Modifier</a></td>";
         }
       }
       echo '</td>';

@@ -37,6 +37,36 @@ if ($_GET['action']=="regler"){
 $mode = empty($_GET["mode"]) ? "" : "&mode=".$_GET["mode"];
 $submode = empty($_GET["submode"]) ? "" : "&submode=".$_GET["submode"];
 
+if (isset($_POST["valeur"])) {
+    mysqli_query($bdd_transac, "UPDATE Transactions SET Montant='".$_POST['valeur']."' WHERE ID='".$_POST['id']."'");
+    $mode = empty($_POST["mode"]) ? "" : "&mode=".$_POST["mode"];
+    $submode = empty($_POST["submode"]) ? "" : "&submode=".$_POST["submode"];
+
+    if (strpos($_GET['page'],"?")) {
+        header("Location: ".$_GET['page']."&".$mode.$submode);
+        exit();
+    } else {
+        header("Location: ".$_GET['page']."?".$mode.$submode);
+        exit();
+    }
+    
+}
+
+if (isset($_POST["msg_ex"])) {
+    mysqli_query($bdd_transac, "UPDATE Transactions SET Msg_exp='".$_POST['msg_ex']."' WHERE ID='".$_POST['id']."'");
+    $mode = empty($_POST["mode"]) ? "" : "&mode=".$_POST["mode"];
+    $submode = empty($_POST["submode"]) ? "" : "&submode=".$_POST["submode"];
+
+    if (strpos($_GET['page'],"?")) {
+        header("Location: ".$_GET['page']."&".$mode.$submode);
+        exit();
+    } else {
+        header("Location: ".$_GET['page']."?".$mode.$submode);
+        exit();
+    }
+    
+}
+
 $value ="";
 if (isset($_GET['action'])) {
     if ($_GET['action']=="modifymsg"){

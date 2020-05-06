@@ -228,7 +228,12 @@ function selec_display_transac($id,$mode,$submode) {
     return $ras;
 }
 
-function display_transac_aux($n,$ras,$page,$mode,$submode) {
+function display_transac_aux($tab) {
+    $n=$tab["n"];
+    $ras = $tab["ras"];
+    $page = $tab["page"];
+    $mode = $tab["mode"];
+    $submode = $tab["submode"];
     while ($donnees = ($row = mysqli_fetch_row($ras))){
         color_table($donnees);
         echo '<th scope="row">'.$n.'</th>';
@@ -280,9 +285,10 @@ function display_transac($page,$id,$mode,$submode) {
     afficher_bouton($page);
     entete_amis($page,$submode,$mode);
     $ras = selec_display_transac($id,$mode,$submode);
-    $n=display_transac_aux(1,$ras,$page,$mode,$submode);
+    $n=1;
+    $n=display_transac_aux(compact("n","ras","page","mode","submode"));
     $ras = selec_display_transac($id,$mode+3,$submode);
-    display_transac_aux($n,$ras,$page,$mode,$submode);  
+    display_transac_aux(compact("n","ras","page","mode","submode"));  
     echo "</tbody>";
     echo "</table>";
     echo "</form>";

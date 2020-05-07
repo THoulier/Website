@@ -15,21 +15,24 @@ for($i=2;$i<=$_GET['nb'];$i++){
     }
 }
 
-if (isset($_POST['montant_total'])) {
-    if (empty($_POST['montant_total'])) {
-        if (!empty($error)) {
-            $error=$error."&montant_total=1";
-        }else {
-            $error="montant_total=1";
-        }
-    }   elseif ($_POST['montant_total'] < 0) {
-        if (!empty($error)) {
-            $error=$error."&montant_total=2";
-        }  else {
-            $error="montant_total=2";
-        }
+for($i=1;$i<=$_GET['nb'];$i++){
+    for ($j=1;$j<=$_GET['nb'];$j++){
+        if ($i != $j){
+            if (!empty($_POST["pseudo$i"]) && !empty($_POST["pseudo$j"])){
+                if ($_POST["pseudo$i"] == $_POST["pseudo$j"]){
+                    if (!empty($error)) {
+                        $error=$error."&pseudo".$i."=4";
+                    } else {
+                        $error="pseudo".$i."=4";
+                    }
+                }
+            }
+        } 
     }
 }
+
+$error = check_arg_montant_tot_grp($_POST['montant_total'],$error);
+
 
 if (!empty($error)) {
     //echo $error;

@@ -73,6 +73,11 @@ function error_pseudo_grp($var){
                 echo "Vous ne pouvez pas enregistrer une transaction à vous même!";
             echo "</div>";
         }
+        if ($_GET["pseudo$var"]==4) {
+            echo '<div class="alert alert-danger" role="alert">';
+                echo "Vous ne pouvez pas mettre plus d'une fois le même utilisateur!";
+            echo "</div>";
+        }
     }
 }
 

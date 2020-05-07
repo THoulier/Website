@@ -35,6 +35,11 @@
                   echo "Vous devez renseigner le nombre d'utilisateurs cibles!";
               echo "</div>";
             }
+            if ($_GET["nbr"]==2) {
+              echo '<div class="alert alert-danger" role="alert">';
+                  echo "Vous devez renseigner un nombre d'utilisateurs cibles positif!";
+              echo "</div>";
+            }
           }
           ?>
           Le montant doit être rentré:

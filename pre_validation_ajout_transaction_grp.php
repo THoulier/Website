@@ -17,6 +17,14 @@ if (empty($_POST['nb'])) {
     }
 
 } 
+if ($_POST['nb'] <0) {
+    if (!empty($error)) {
+        $error=$error."&nbr=2";
+    } else {
+        $error="nbr=2";
+    }
+
+} 
 if (!empty($error)) {
     header("Location: transaction_grp.php?".$error);
     exit();

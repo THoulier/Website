@@ -169,5 +169,24 @@ function check_arg_transac_grp_bis($pseudo,$montant,$var) {
 }
 
 
+function check_arg_montant_tot_grp($montanttot,$error){
+    if (isset($montanttot)) {
+        if (empty($montanttot)) {
+            if (!empty($error)) {
+                $error=$error."&montant_total=1";
+            }else {
+                $error="montant_total=1";
+            }
+        }   elseif ($montanttot < 0) {
+            if (!empty($error)) {
+                $error=$error."&montant_total=2";
+            }  else {
+                $error="montant_total=2";
+            }
+        }
+    }
+    return $error;
+}
+
 
 ?>

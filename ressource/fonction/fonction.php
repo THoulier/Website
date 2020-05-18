@@ -1,7 +1,7 @@
 <?php
 
 function con() {
-    return mysqli_connect("localhost", "root", "","test");
+    return mysqli_connect("localhost", "root", "","LGBT");
 }
 
 

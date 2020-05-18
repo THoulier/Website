@@ -1,5 +1,5 @@
 <?php
-$bdd_transac = mysqli_connect("localhost", "root", "","test");
+$bdd_transac = mysqli_connect("localhost", "root", "","LGBT");
 if (mysqli_connect_errno($bdd_transac)) {
     echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
 }

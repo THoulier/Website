@@ -3,7 +3,7 @@ session_start();
 
 
 
-$bdd_friend = mysqli_connect("localhost", "root", "","test");
+$bdd_friend = mysqli_connect("localhost", "root", "","LGBT");
 if (mysqli_connect_errno($bdd_friend)) {
     echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
 }

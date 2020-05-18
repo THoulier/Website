@@ -1,10 +1,10 @@
 <?php
 $bdd = mysqli_connect("localhost", "root", "");
-$sql = "CREATE DATABASE test";
+$sql = "CREATE DATABASE LGBT";
 mysqli_query($bdd, $sql);
 mysqli_close($bdd);
 
-$bdd = mysqli_connect("localhost", "root", "","test");
+$bdd = mysqli_connect("localhost", "root", "","LGBT");
 
 
 $query = "CREATE TABLE `Utilisateur` (

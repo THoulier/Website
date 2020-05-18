@@ -2,7 +2,9 @@ Projet IT103-Team LG(B)T
 Membres: Gabriel Berger, Thomas Houlier, Leïla Bouidra
 
 Processus d'installation:
-Il faut se rendre à l'adresse install.php situé à la racine du projet. Le fichier contient un script qui va créer la base de donnée avec toutes les tables nécessaire au bon fonctionnement du site.
+
+Il faut se rendre à l'adresse install.php située à la racine du projet. Le fichier contient un script qui va créer la base de donnée avec toutes les tables nécessaires au bon fonctionnement du site.
+
 Trois tables seront implémentées:
     -Utilisateur: contient les informations relatives aux utilisateurs du site.
     -Amis: contient les relations d'amitiés entre utilisateurs.

@@ -106,5 +106,6 @@ mysqli_query($bdd, $query);
 
 mysqli_query($bdd, $query);
 
-
+header("Location: index.php");
+?>
 

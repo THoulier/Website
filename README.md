@@ -21,3 +21,5 @@ Quatre transactions seront créées par defaut:
 	-ID:4 	Message explicatif:Courses 	Utilisateur source:2 	Utilisateur cible:1 	Montant:85.3 	Date de création:2020-03-06     Statut:fermée	Date de fermeture:2020-05-06 	Message de fermeture:virement le 12
 
 Pour se rendre à la page d'accueil du site, rendez-vous à l'adresse index.php
+
+La documentation se trouve dans le dossier Autre
